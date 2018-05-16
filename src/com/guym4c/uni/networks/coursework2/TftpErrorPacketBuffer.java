@@ -13,6 +13,22 @@ public class TftpErrorPacketBuffer extends GenericTftpPacketBuffer {
         this.message = message;
     }
 
+    public TftpErrorCode getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(TftpErrorCode errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     @Override
     public ArrayList<Byte> getByteBuffer() {
         return new ByteArray() {{

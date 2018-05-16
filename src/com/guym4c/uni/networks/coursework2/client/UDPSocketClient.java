@@ -22,36 +22,16 @@ public class UDPSocketClient {
         int len = 256;
         byte[] buffer = new byte[len];
 
-        //****************************************************************************************
-        // add a line below to instantiate the DatagramSocket socket object
-        // bind the socket to some port over 1024
-        // Note: this is NOT the port we set in the server
-        // If you put the same port you will get an exception because
-        // the server is also listening to this port and both processes run on the same machine!
-        //****************************************************************************************
         socket = new DatagramSocket(4000);
 
-        // Add source code below to get the address from args[0], the argument handed in when the process is started.
-        // In Netbeans, add a command line argument by changing the running configuration.
-        // The address must be transfomed from a String to an InetAddress (an IP addresse object in Java).
         InetAddress address = InetAddress.getByName(args[0]);
 
-        //************************************************************
-        // Add a line to instantiate a packet using the buffer byte array
-        // Set the IP address and port fields in the packet so that the packet is sent to the server
-        //************************************************************
         packet = new DatagramPacket(buffer, len);
         packet.setAddress(address);
         packet.setPort(9000);
 
-        // Send the datagram packet to the server (this is a blocking call) - we do not care about the data that the packet carries.
-        // The server will respond to any kind of request (i.e. regardless of the packet payload)
         socket.send(packet);
 
-        //**************************************************************************************
-        // add a line of code below to receive a packet containing the server's response
-        // we can reuse the DatagramPacket instantiated above - all settable values will be overriden when the receive call completes.
-        //**************************************************************************************
         socket.receive(packet);
 
         // display response

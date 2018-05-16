@@ -20,7 +20,7 @@ public class UDPSocketClient {
         }
 
         int len = 256;
-        byte[] buf = new byte[len];
+        byte[] buffer = new byte[len];
 
         //****************************************************************************************
         // add a line below to instantiate the DatagramSocket socket object
@@ -37,10 +37,10 @@ public class UDPSocketClient {
         InetAddress address = InetAddress.getByName(args[0]);
 
         //************************************************************
-        // Add a line to instantiate a packet using the buf byte array
+        // Add a line to instantiate a packet using the buffer byte array
         // Set the IP address and port fields in the packet so that the packet is sent to the server
         //************************************************************
-        packet = new DatagramPacket(buf, len);
+        packet = new DatagramPacket(buffer, len);
         packet.setAddress(address);
         packet.setPort(9000);
 

@@ -32,7 +32,7 @@ public class UDPSocketServer extends Thread {
     public void run() {
 
         int counter = 0;                    // just a counter - used below
-        byte[] recvBuf = new byte[256];     // a byte array that will store the data received by the client
+        byte[] recvBuffer = new byte[256];     // a byte array that will store the data received by the client
 
         try {
             // run forever
@@ -43,7 +43,7 @@ public class UDPSocketServer extends Thread {
                 // 2) wait until a client sends something (a blocking call).
                 //**************************************
 
-                DatagramPacket packet = new DatagramPacket(recvBuf, 256);
+                DatagramPacket packet = new DatagramPacket(recvBuffer, 256);
                 socket.receive(packet);
 
                 // Get the current date/time and copy it in the byte array
@@ -56,14 +56,14 @@ public class UDPSocketServer extends Thread {
                 // Add source code below to extract the IP address (an InetAddress object) and source port (int) from the received packet
                 // They will be both used to send back the response (which is now in the buf byte array -- see above)
                 //****************************************
-                InetAddress addr = packet.getAddress();
+                InetAddress address = packet.getAddress();
                 int srcPort = packet.getPort();
 
                 // set the buf as the data of the packet (let's re-use the same packet object)
                 packet.setData(buf);
 
                 // set the IP address and port extracted above as destination IP address and port in the packet to be sent
-                packet.setAddress(addr);
+                packet.setAddress(address);
                 packet.setPort(srcPort);
 
                 //*****************************************

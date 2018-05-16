@@ -1,6 +1,9 @@
 package com.guym4c.uni.networks.coursework2;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class GenericTftpPacketBuffer {
 
@@ -8,6 +11,14 @@ public abstract class GenericTftpPacketBuffer {
 
     public GenericTftpPacketBuffer(TftpOpcode opcode) {
         this.opcode = opcode;
+    }
+
+    public GenericTftpPacketBuffer(int opcode) {
+        this.opcode = TftpOpcode.fromInt(opcode);
+    }
+
+    public GenericTftpPacketBuffer(byte[] bytes) {
+        this.opcode = TftpOpcode.fromInt(bytes[1]);
     }
 
     public TftpOpcode getOpcode() {

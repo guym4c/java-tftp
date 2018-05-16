@@ -16,9 +16,7 @@ public class UDPSocketClient {
         DatagramPacket packet;
 
         byte[] buffer = new byte[TFTP_DATA_LENGTH];
-
         socket = new DatagramSocket(4000);
-
         InetAddress address = InetAddress.getByName(LOCAL_SERVER_IP);
 
         packet = new DatagramPacket(buffer, TFTP_DATA_LENGTH);

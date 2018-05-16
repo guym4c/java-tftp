@@ -5,13 +5,12 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.Date;
 
 public class UDPSocketServer extends Thread {
 
     private static final int TFTP_DATA_LENGTH = 512;
 
-    protected DatagramSocket socket = null;
+    private DatagramSocket socket;
 
     public UDPSocketServer() throws SocketException {
         this("UDPSocketServer");
@@ -26,23 +25,21 @@ public class UDPSocketServer extends Thread {
     public void run() {
 
         int counter = 0;
-        byte[] recvBuffer = new byte[TFTP_DATA_LENGTH];
+        byte[] inBuffer = new byte[TFTP_DATA_LENGTH];
 
         try {
             while (true) {
 
-                DatagramPacket packet = new DatagramPacket(recvBuffer, TFTP_DATA_LENGTH);
+                DatagramPacket packet = new DatagramPacket(inBuffer, TFTP_DATA_LENGTH);
                 socket.receive(packet);
 
-                String date = new Date().toString() + " - Counter: " + (counter);
-                byte[] buffer = new byte[date.length()];
-                System.arraycopy(date.getBytes(), 0, buffer, 0, date.length());
+                byte[] bytes = packet.getData();
+
 
                 InetAddress address = packet.getAddress();
                 int sourcePort = packet.getPort();
 
-                packet.setData(buffer);
-
+                packet.setData(outBuffer);
                 packet.setAddress(address);
                 packet.setPort(sourcePort);
 

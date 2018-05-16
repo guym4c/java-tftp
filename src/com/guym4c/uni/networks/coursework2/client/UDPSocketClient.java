@@ -7,26 +7,21 @@ import java.net.InetAddress;
 
 public class UDPSocketClient {
 
-    // the client will take the IP Address of the server (in dotted decimal format as an argument)
-    // given that for this tutorial both the client and the server will run on the same machine, you can use the loopback address 127.0.0.1
+    private static final int TFTP_DATA_LENGTH = 512;
+    private static final String LOCAL_SERVER_IP = "127.0.0.1";
+
     public static void main(String[] args) throws IOException {
 
         DatagramSocket socket;
         DatagramPacket packet;
 
-        if (args.length != 1) {
-            System.out.println("the hostname of the server is required");
-            return;
-        }
-
-        int len = 256;
-        byte[] buffer = new byte[len];
+        byte[] buffer = new byte[TFTP_DATA_LENGTH];
 
         socket = new DatagramSocket(4000);
 
-        InetAddress address = InetAddress.getByName(args[0]);
+        InetAddress address = InetAddress.getByName(LOCAL_SERVER_IP);
 
-        packet = new DatagramPacket(buffer, len);
+        packet = new DatagramPacket(buffer, TFTP_DATA_LENGTH);
         packet.setAddress(address);
         packet.setPort(9000);
 
@@ -34,7 +29,6 @@ public class UDPSocketClient {
 
         socket.receive(packet);
 
-        // display response
         String received = new String(packet.getData());
         System.out.println("Today's date: " + received.substring(0, packet.getLength()));
         socket.close();

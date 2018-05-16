@@ -19,26 +19,24 @@ public class UDPSocketServer extends Thread {
 
     public UDPSocketServer(String name) throws SocketException {
         super(name);
-
         socket = new DatagramSocket(9000);
-
     }
 
     @Override
     public void run() {
 
         int counter = 0;
-        byte[] recvBuffer = new byte[512];
+        byte[] recvBuffer = new byte[TFTP_DATA_LENGTH];
 
         try {
             while (true) {
 
-                DatagramPacket packet = new DatagramPacket(recvBuffer, 512);
+                DatagramPacket packet = new DatagramPacket(recvBuffer, TFTP_DATA_LENGTH);
                 socket.receive(packet);
-                
-                String dString = new Date().toString() + " - Counter: " + (counter);
-                byte[] buffer = new byte[dString.length()];
-                System.arraycopy(dString.getBytes(), 0, buffer, 0, dString.length());
+
+                String date = new Date().toString() + " - Counter: " + (counter);
+                byte[] buffer = new byte[date.length()];
+                System.arraycopy(date.getBytes(), 0, buffer, 0, date.length());
 
                 InetAddress address = packet.getAddress();
                 int sourcePort = packet.getPort();

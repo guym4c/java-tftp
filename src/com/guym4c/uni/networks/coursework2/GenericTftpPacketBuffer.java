@@ -20,6 +20,23 @@ public abstract class GenericTftpPacketBuffer {
 
     public abstract ArrayList<Byte> getByteBuffer();
 
+    static ArrayList<String> getZeroDelimitedData(byte[] bytes) {
+        ArrayList<String> results = new ArrayList<>();
+        int i = 0;
+        int base = 0;
+        while (i < bytes.length) {
+            while (bytes[i] != 0) {
+                i++;
+            }
+            results.add(new String(Arrays.copyOfRange(bytes, base, i), StandardCharsets.UTF_8));
+            base = i;
+        }
 
+        return results;
+    }
+
+    static int getIntFromByte(byte b) {
+        return new BigInteger(new byte[] {b}).intValue();
+    }
 
 }

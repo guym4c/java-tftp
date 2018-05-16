@@ -1,6 +1,8 @@
 package com.guym4c.uni.networks.coursework2;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TftpRequestPacketBuffer extends GenericTftpPacketBuffer {
 
@@ -39,5 +41,12 @@ public class TftpRequestPacketBuffer extends GenericTftpPacketBuffer {
             addString(mode);
             addZeroes();
         }};
+    }
+
+    public TftpRequestPacketBuffer(byte[] bytes) {
+        super(getIntFromByte(bytes[1]));
+        ArrayList<String> data = getZeroDelimitedData(Arrays.copyOfRange(bytes, 2, bytes.length - 2));
+        this.filename = data.get(0);
+        this.mode = data.get(1);
     }
 }

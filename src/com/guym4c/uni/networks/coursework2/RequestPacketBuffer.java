@@ -8,9 +8,9 @@ public class RequestPacketBuffer extends GenericPacketBuffer {
     private static final int STRING_DATA_OFFSET = 2;
 
     private String filename;
-    private String mode;
+    private Mode mode;
 
-    public RequestPacketBuffer(Opcode opcode, String filename, String mode) {
+    public RequestPacketBuffer(Opcode opcode, String filename, Mode mode) {
         super(opcode);
         this.filename = filename;
         this.mode = mode;
@@ -24,11 +24,11 @@ public class RequestPacketBuffer extends GenericPacketBuffer {
         this.filename = filename;
     }
 
-    public String getMode() {
+    public Mode getMode() {
         return mode;
     }
 
-    public void setMode(String mode) {
+    public void setMode(Mode mode) {
         this.mode = mode;
     }
 
@@ -39,7 +39,7 @@ public class RequestPacketBuffer extends GenericPacketBuffer {
             addInt(getOpcode().toInt());
             addString(filename);
             addZeroes();
-            addString(mode);
+            addString(mode.toString());
             addZeroes();
         }};
     }
@@ -48,6 +48,6 @@ public class RequestPacketBuffer extends GenericPacketBuffer {
         super(getIntFromByte(bytes[1]));
         ArrayList<String> data = getZeroDelimitedData(Arrays.copyOfRange(bytes, STRING_DATA_OFFSET, bytes.length - STRING_DATA_OFFSET));
         this.filename = data.get(0);
-        this.mode = data.get(1);
+        this.mode = Mode.valueOf(data.get(1));
     }
 }

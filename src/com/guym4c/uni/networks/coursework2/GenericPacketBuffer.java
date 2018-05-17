@@ -37,16 +37,20 @@ public class GenericPacketBuffer {
     }
 
 
-    protected static ArrayList<String> getZeroDelimitedData(byte[] bytes) {
+    protected static ArrayList<String> getNullDelimitedData(byte[] bytes) {
         ArrayList<String> results = new ArrayList<>();
         int i = 0;
         int base = 0;
-        while (i < bytes.length) {
-            while (bytes[i] != 0) {
+        boolean quit = false;
+        while (i < bytes.length && !quit) {
+            while (bytes[i] != 0 && i < bytes.length) {
                 i++;
             }
             results.add(getStringFromBytes(Arrays.copyOfRange(bytes, base, i)));
-            base = i;
+            base = ++i;
+            if (bytes[i] == 0 && bytes[i + 1] == 0) {
+                quit = true;
+            }
         }
         return results;
     }

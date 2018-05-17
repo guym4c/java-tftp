@@ -22,9 +22,9 @@ public class Server {
     }
 
     public void run() throws IOException {
-        byte[] inBuffer = new byte[MAX_PAYLOAD_SIZE];
 
         while (true) {
+            byte[] inBuffer = new byte[MAX_PAYLOAD_SIZE + 4];
             DatagramPacket packet = new DatagramPacket(inBuffer, MAX_PAYLOAD_SIZE);
             socket.receive(packet);
             byte[] bytes = packet.getData();

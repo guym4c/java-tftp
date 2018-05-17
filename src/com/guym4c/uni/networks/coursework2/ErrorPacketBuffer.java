@@ -44,7 +44,7 @@ public class ErrorPacketBuffer extends GenericPacketBuffer {
     public ErrorPacketBuffer(byte[] bytes) {
         super(getIntFromByte(bytes[1]));
         this.errorCode = ErrorCode.fromInt(getIntFromByte(bytes[3]));
-        this.message = getZeroDelimitedData(Arrays.copyOfRange(bytes, STRING_DATA_OFFSET, bytes.length - STRING_DATA_OFFSET))
+        this.message = getNullDelimitedData(Arrays.copyOfRange(bytes, STRING_DATA_OFFSET, bytes.length - STRING_DATA_OFFSET))
                 .get(0);
     }
 }

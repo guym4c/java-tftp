@@ -34,6 +34,7 @@ public class WriteRequestServlet extends RequestServlet {
             DatagramPacket packet = new DatagramPacket(new byte[MAX_PAYLOAD_SIZE + 4], MAX_PAYLOAD_SIZE + 4);
             try {
                 socket.receive(packet);
+                System.out.println("received");
                 receive(packet);
             } catch (SocketTimeoutException timeout) {
                 if (terminated) {
@@ -58,8 +59,12 @@ public class WriteRequestServlet extends RequestServlet {
         byte[] bytes = packet.getData();
 
         DataPacketBuffer dataBuffer = new DataPacketBuffer(bytes);
-        DataPacketBuffer previousData = (DataPacketBuffer) received;
-        if (dataBuffer.getBlock() == previousData.getBlock() + 1) {
+        int previousBlock = -1;
+        if (dataBuffer.getBlock() > 0) {
+            DataPacketBuffer previousData = (DataPacketBuffer) received;
+            previousBlock = previousData.getBlock();
+        }
+        if (dataBuffer.getBlock() == previousBlock + 1) {
             bufferedWriter.write(dataBuffer.getData());
         } else {
             resend();

@@ -29,13 +29,13 @@ public abstract class RequestServlet extends Thread {
         port = packet.getPort();
     }
 
-    protected void error(DatagramPacket received, ErrorCode errorCode, String message) throws IOException {
+    protected void error(ErrorCode errorCode, String message) throws IOException {
         ErrorPacketBuffer errorPacketBuffer = new ErrorPacketBuffer(errorCode, message);
         send(errorPacketBuffer.getByteBuffer());
     }
 
-    protected void error(DatagramPacket received) throws IOException {
-        error(received, ErrorCode.UnknownError, "Unknown Error");
+    protected void error() throws IOException {
+        error(ErrorCode.UnknownError, "Unknown Error");
     }
 
     protected void send(ByteArray toSend) throws IOException {

@@ -1,6 +1,4 @@
-package com.guym4c.uni.networks.coursework2.server;
-
-import com.guym4c.uni.networks.coursework2.GenericPacketBuffer;
+package com.guym4c.uni.networks.coursework2;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

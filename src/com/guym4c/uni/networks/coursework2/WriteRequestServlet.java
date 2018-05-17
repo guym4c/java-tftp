@@ -1,6 +1,4 @@
-package com.guym4c.uni.networks.coursework2.server;
-
-import com.guym4c.uni.networks.coursework2.*;
+package com.guym4c.uni.networks.coursework2;
 
 import java.io.*;
 import java.net.DatagramPacket;
@@ -8,7 +6,6 @@ import java.net.SocketTimeoutException;
 
 public class WriteRequestServlet extends RequestServlet {
 
-    private Writer fileWriter;
     private BufferedWriter bufferedWriter;
     private boolean terminated;
     private boolean destroyable;
@@ -20,7 +17,7 @@ public class WriteRequestServlet extends RequestServlet {
 
         RequestPacketBuffer requestBuffer = new RequestPacketBuffer(packet.getData());
 
-        fileWriter = new FileWriter(requestBuffer.getFilename());
+        Writer fileWriter = new FileWriter(requestBuffer.getFilename());
         bufferedWriter = new BufferedWriter(fileWriter);
 
         TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(0);

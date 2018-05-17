@@ -1,8 +1,5 @@
-package com.guym4c.uni.networks.coursework2.server;
+package com.guym4c.uni.networks.coursework2;
 
-import com.guym4c.uni.networks.coursework2.ByteArray;
-
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.SocketException;

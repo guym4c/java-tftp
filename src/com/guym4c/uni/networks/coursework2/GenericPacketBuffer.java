@@ -43,7 +43,7 @@ public class GenericPacketBuffer {
         int base = 0;
         boolean quit = false;
         while (i < bytes.length && !quit) {
-            while (bytes[i] != 0 && i < bytes.length) {
+            while (bytes[i] != 0) {
                 i++;
             }
             results.add(getStringFromBytes(Arrays.copyOfRange(bytes, base, i)));

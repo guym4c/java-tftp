@@ -1,4 +1,4 @@
-package com.guym4c.uni.networks.coursework2.server;
+package com.guym4c.uni.networks.coursework2;
 
 import com.guym4c.uni.networks.coursework2.*;
 

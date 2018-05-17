@@ -12,14 +12,17 @@ public class WriteRequestClient extends RequestClient {
     private FileReader fileReader;
     private BufferedReader bufferedReader;
 
-    public WriteRequestClient(String filename, int tid) throws SocketException {
-        super(tid);
+    public WriteRequestClient(String address, int port, String filename, int tid) throws SocketException {
+        super(address, port, tid);
         try {
             fileReader = new FileReader(filename);
         } catch (FileNotFoundException notFound) {
 
         }
         bufferedReader = new BufferedReader(fileReader);
+
+        RequestPacketBuffer requestBuffer = new RequestPacketBuffer(Opcode.WriteRequest, filename, DEFAULT_MODE);
+
     }
 
     @Override

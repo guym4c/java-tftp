@@ -6,8 +6,8 @@ import java.net.SocketException;
 
 public class ReadRequestClient extends RequestClient {
 
-    public ReadRequestClient(String filename, int tid) throws SocketException {
-        super(tid);
+    public ReadRequestClient(String address, int port, String filename, int tid) throws SocketException {
+        super(address, port, tid);
     }
 
     @Override

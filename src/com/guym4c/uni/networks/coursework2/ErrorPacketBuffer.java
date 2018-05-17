@@ -1,16 +1,15 @@
 package com.guym4c.uni.networks.coursework2;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
-public class TftpErrorPacketBuffer extends GenericTftpPacketBuffer {
+public class ErrorPacketBuffer extends GenericPacketBuffer {
 
     private static final int STRING_DATA_OFFSET = 4;
 
     private TftpErrorCode errorCode;
     private String message;
 
-    public TftpErrorPacketBuffer(TftpErrorCode errorCode, String message) {
+    public ErrorPacketBuffer(TftpErrorCode errorCode, String message) {
         super(TftpOpcode.Error);
         this.errorCode = errorCode;
         this.message = message;
@@ -42,7 +41,7 @@ public class TftpErrorPacketBuffer extends GenericTftpPacketBuffer {
         }};
     }
 
-    public TftpErrorPacketBuffer(byte[] bytes) {
+    public ErrorPacketBuffer(byte[] bytes) {
         super(getIntFromByte(bytes[1]));
         this.errorCode = TftpErrorCode.fromInt(getIntFromByte(bytes[3]));
         this.message = getZeroDelimitedData(Arrays.copyOfRange(bytes, STRING_DATA_OFFSET, bytes.length - STRING_DATA_OFFSET))

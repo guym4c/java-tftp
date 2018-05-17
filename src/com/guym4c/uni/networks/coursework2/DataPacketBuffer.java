@@ -2,7 +2,7 @@ package com.guym4c.uni.networks.coursework2;
 
 import java.util.Arrays;
 
-public class TftpDataPacketBuffer extends TftpTransmissionPacketBuffer {
+public class DataPacketBuffer extends TransmissionPacketBuffer {
 
     private static final int STRING_DATA_OFFSET = 4;
     private static final int MAX_PAYLOAD_SIZE = 512;
@@ -10,13 +10,13 @@ public class TftpDataPacketBuffer extends TftpTransmissionPacketBuffer {
     private String data;
     private boolean terminating;
 
-    public TftpDataPacketBuffer(TftpOpcode opcode, int block, String data, boolean terminating) {
+    public DataPacketBuffer(TftpOpcode opcode, int block, String data, boolean terminating) {
         super(opcode, block);
         this.data = data;
         this.terminating = terminating;
     }
 
-    public TftpDataPacketBuffer(int block, String data, boolean terminating) {
+    public DataPacketBuffer(int block, String data, boolean terminating) {
         super(TftpOpcode.Data, block);
         this.data = data;
         this.terminating = terminating;
@@ -49,7 +49,7 @@ public class TftpDataPacketBuffer extends TftpTransmissionPacketBuffer {
         }};
     }
 
-    public TftpDataPacketBuffer(byte[] bytes) {
+    public DataPacketBuffer(byte[] bytes) {
         super(bytes);
         this.data = getStringFromBytes(Arrays.copyOfRange(bytes, STRING_DATA_OFFSET, bytes.length - 1));
         this.terminating = bytes.length - STRING_DATA_OFFSET - 1 == MAX_PAYLOAD_SIZE;

@@ -1,17 +1,15 @@
 package com.guym4c.uni.networks.coursework2;
 
-import java.util.ArrayList;
-
-public class TftpTransmissionPacketBuffer extends GenericTftpPacketBuffer {
+public class TransmissionPacketBuffer extends GenericPacketBuffer {
 
     private int block;
 
-    public TftpTransmissionPacketBuffer(TftpOpcode opcode, int block) {
+    public TransmissionPacketBuffer(TftpOpcode opcode, int block) {
         super(opcode);
         this.block = block;
     }
 
-    public TftpTransmissionPacketBuffer(int block) {
+    public TransmissionPacketBuffer(int block) {
         super(TftpOpcode.Acknowledgement);
         this.block = block;
     }
@@ -34,7 +32,7 @@ public class TftpTransmissionPacketBuffer extends GenericTftpPacketBuffer {
         }};
     }
 
-    public TftpTransmissionPacketBuffer(byte[] bytes) {
+    public TransmissionPacketBuffer(byte[] bytes) {
         super(getIntFromByte(bytes[1]));
         this.block = getIntFromByte(bytes[3]);
     }

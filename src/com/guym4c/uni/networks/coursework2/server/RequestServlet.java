@@ -7,7 +7,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.Random;
 
 public abstract class RequestServlet extends Thread {
 
@@ -15,7 +14,7 @@ public abstract class RequestServlet extends Thread {
     protected static final int TIMEOUT = 200;
 
     protected DatagramPacket sent;
-    protected GenericTftpPacketBuffer received;
+    protected GenericPacketBuffer received;
     protected int tid;
     protected DatagramSocket socket;
     protected InetAddress address;
@@ -24,14 +23,14 @@ public abstract class RequestServlet extends Thread {
     public RequestServlet(DatagramPacket packet, int tid) throws SocketException {
         super("Servlet" + tid);
         sent = new DatagramPacket(new byte[MAX_PAYLOAD_SIZE + 4], MAX_PAYLOAD_SIZE + 4);
-        received = new TftpRequestPacketBuffer(packet.getData());
+        received = new RequestPacketBuffer(packet.getData());
         socket = new DatagramSocket(tid);
         address = packet.getAddress();
         port = packet.getPort();
     }
 
     protected void error(DatagramPacket received, TftpErrorCode errorCode, String message) throws IOException {
-        TftpErrorPacketBuffer errorPacketBuffer = new TftpErrorPacketBuffer(errorCode, message);
+        ErrorPacketBuffer errorPacketBuffer = new ErrorPacketBuffer(errorCode, message);
         send(errorPacketBuffer.getByteBuffer());
     }
 

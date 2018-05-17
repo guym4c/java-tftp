@@ -18,12 +18,12 @@ public class WriteRequestServlet extends RequestServlet {
         terminated = false;
         destroyable = false;
 
-        TftpRequestPacketBuffer requestBuffer = new TftpRequestPacketBuffer(packet.getData());
+        RequestPacketBuffer requestBuffer = new RequestPacketBuffer(packet.getData());
 
         fileWriter = new FileWriter(requestBuffer.getFilename());
         bufferedWriter = new BufferedWriter(fileWriter);
 
-        TftpTransmissionPacketBuffer acknowledgementBuffer = new TftpTransmissionPacketBuffer(0);
+        TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(0);
 
         send(acknowledgementBuffer.getByteBuffer());
     }
@@ -57,8 +57,8 @@ public class WriteRequestServlet extends RequestServlet {
 
         byte[] bytes = packet.getData();
 
-        TftpDataPacketBuffer dataBuffer = new TftpDataPacketBuffer(bytes);
-        TftpDataPacketBuffer previousData = (TftpDataPacketBuffer) received;
+        DataPacketBuffer dataBuffer = new DataPacketBuffer(bytes);
+        DataPacketBuffer previousData = (DataPacketBuffer) received;
         if (dataBuffer.getBlock() == previousData.getBlock() + 1) {
             bufferedWriter.write(dataBuffer.getData());
         } else {
@@ -69,7 +69,7 @@ public class WriteRequestServlet extends RequestServlet {
             terminated = true;
         }
 
-        TftpTransmissionPacketBuffer acknowledgementBuffer = new TftpTransmissionPacketBuffer(0);
+        TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(0);
         send(acknowledgementBuffer.getByteBuffer());
     }
 

@@ -1,6 +1,6 @@
 package com.guym4c.uni.networks.coursework2.server;
 
-import com.guym4c.uni.networks.coursework2.GenericTftpPacketBuffer;
+import com.guym4c.uni.networks.coursework2.GenericPacketBuffer;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -29,7 +29,7 @@ public class Server {
             socket.receive(packet);
             byte[] bytes = packet.getData();
             try {
-                GenericTftpPacketBuffer genericBuffer = new GenericTftpPacketBuffer(bytes);
+                GenericPacketBuffer genericBuffer = new GenericPacketBuffer(bytes);
                 int tid = new Random().nextInt(TID_CEILING) + TID_FLOOR;
                 switch (genericBuffer.getOpcode()) {
                     case ReadRequest:

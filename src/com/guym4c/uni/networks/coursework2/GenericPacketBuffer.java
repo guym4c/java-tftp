@@ -5,19 +5,19 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GenericTftpPacketBuffer {
+public class GenericPacketBuffer {
 
     private TftpOpcode opcode;
 
-    public GenericTftpPacketBuffer(TftpOpcode opcode) {
+    public GenericPacketBuffer(TftpOpcode opcode) {
         this.opcode = opcode;
     }
 
-    public GenericTftpPacketBuffer(int opcode) {
+    public GenericPacketBuffer(int opcode) {
         this.opcode = TftpOpcode.fromInt(opcode);
     }
 
-    public GenericTftpPacketBuffer(byte[] bytes) {
+    public GenericPacketBuffer(byte[] bytes) {
         this.opcode = TftpOpcode.fromInt(bytes[1]);
     }
 

@@ -37,8 +37,22 @@ public class Server {
                         new WriteRequestServlet(packet, tid).start();
                         break;
                     default:
+                        new RequestServlet(packet, tid) {
+                            @Override
+                            void receive(DatagramPacket packet) throws IOException {
+                                error();
+                            }
 
-                        break;
+                            @Override
+                            public void run() {
+                                ErrorPacketBuffer errorBuffer = new ErrorPacketBuffer(ErrorCode.UnknownError, "Unknown error");
+                                try {
+                                    send(errorBuffer.getByteBuffer());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }.start();
                 }
             } catch (Exception e) {
                 System.err.println(e.getMessage());

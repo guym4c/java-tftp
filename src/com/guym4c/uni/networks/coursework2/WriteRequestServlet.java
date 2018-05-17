@@ -6,6 +6,7 @@ import java.net.SocketTimeoutException;
 
 public class WriteRequestServlet extends RequestServlet {
 
+    private FileWriter fileWriter;
     private BufferedWriter bufferedWriter;
     private boolean terminated;
     private boolean destroyable;
@@ -17,7 +18,7 @@ public class WriteRequestServlet extends RequestServlet {
 
         RequestPacketBuffer requestBuffer = new RequestPacketBuffer(packet.getData());
 
-        Writer fileWriter = new FileWriter(requestBuffer.getFilename());
+        fileWriter = new FileWriter(requestBuffer.getFilename());
         bufferedWriter = new BufferedWriter(fileWriter);
 
         TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(0);
@@ -36,6 +37,12 @@ public class WriteRequestServlet extends RequestServlet {
             } catch (SocketTimeoutException timeout) {
                 if (terminated) {
                     socket.close();
+                    try {
+                        bufferedWriter.close();
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     destroyable = true;
                 } else {
                     try {

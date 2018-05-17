@@ -2,6 +2,7 @@ package com.guym4c.uni.networks.coursework2;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.Random;
 

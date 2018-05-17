@@ -2,23 +2,15 @@ package com.guym4c.uni.networks.coursework2;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.util.Random;
 
-public class Server {
-
-    private static final int MAX_PAYLOAD_SIZE = 512;
-    private static final int SERVER_PORT = 9000;
-    private static final int TID_FLOOR = 1024;
-    private static final int TID_CEILING = 32767;
-
-    private DatagramSocket socket;
+public class Server extends NetworkObject {
 
     public Server() throws SocketException {
-        socket = new DatagramSocket(SERVER_PORT);
+        super(SERVER_PORT);
     }
 
+    @Override
     public void run() throws IOException {
 
         while (true) {
@@ -28,7 +20,7 @@ public class Server {
             byte[] bytes = packet.getData();
             try {
                 GenericPacketBuffer genericBuffer = new GenericPacketBuffer(bytes);
-                int tid = new Random().nextInt(TID_CEILING) + TID_FLOOR;
+                int tid = generateTid();
                 switch (genericBuffer.getOpcode()) {
                     case ReadRequest:
                         new ReadRequestServlet(packet, tid).start();

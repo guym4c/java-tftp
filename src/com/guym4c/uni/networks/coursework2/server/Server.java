@@ -10,11 +10,12 @@ import java.net.SocketException;
 public class Server {
 
     private static final int MAX_PAYLOAD_SIZE = 512;
+    private static final int SERVER_PORT = 9000;
 
     private DatagramSocket socket;
 
     public Server() throws SocketException {
-        socket = new DatagramSocket(9000);
+        socket = new DatagramSocket(SERVER_PORT);
     }
 
     public void run() throws IOException {
@@ -29,10 +30,10 @@ public class Server {
 
                 switch (genericBuffer.getOpcode()) {
                     case ReadRequest:
-                        new ReadRequestServlet().start();
+                        new ReadRequestServlet(bytes).start();
                         break;
                     case WriteRequest:
-                        new WriteRequestServlet().start();
+                        new WriteRequestServlet(bytes).start();
                         break;
                     default:
 
@@ -48,6 +49,5 @@ public class Server {
     public static void main(String[] args) throws IOException {
         Server server = new Server();
         server.run();
-
     }
 }

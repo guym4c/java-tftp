@@ -16,6 +16,12 @@ public class TftpDataPacketBuffer extends TftpTransmissionPacketBuffer {
         this.terminating = terminating;
     }
 
+    public TftpDataPacketBuffer(int block, String data, boolean terminating) {
+        super(TftpOpcode.Data, block);
+        this.data = data;
+        this.terminating = terminating;
+    }
+
     public String getData() {
         return data;
     }

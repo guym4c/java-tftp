@@ -11,6 +11,11 @@ public class TftpTransmissionPacketBuffer extends GenericTftpPacketBuffer {
         this.block = block;
     }
 
+    public TftpTransmissionPacketBuffer(int block) {
+        super(TftpOpcode.Acknowledgement);
+        this.block = block;
+    }
+
     public int getBlock() {
         return block;
     }

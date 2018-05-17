@@ -10,8 +10,8 @@ public class TftpErrorPacketBuffer extends GenericTftpPacketBuffer {
     private TftpErrorCode errorCode;
     private String message;
 
-    public TftpErrorPacketBuffer(TftpOpcode opcode, TftpErrorCode errorCode, String message) {
-        super(opcode);
+    public TftpErrorPacketBuffer(TftpErrorCode errorCode, String message) {
+        super(TftpOpcode.Error);
         this.errorCode = errorCode;
         this.message = message;
     }

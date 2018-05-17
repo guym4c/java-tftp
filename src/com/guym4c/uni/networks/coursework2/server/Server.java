@@ -6,11 +6,14 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.Random;
 
 public class Server {
 
     private static final int MAX_PAYLOAD_SIZE = 512;
     private static final int SERVER_PORT = 9000;
+    private static final int TID_FLOOR = 1024;
+    private static final int TID_CEILING = 32767;
 
     private DatagramSocket socket;
 
@@ -27,13 +30,13 @@ public class Server {
             byte[] bytes = packet.getData();
             try {
                 GenericTftpPacketBuffer genericBuffer = new GenericTftpPacketBuffer(bytes);
-
+                int tid = new Random().nextInt(TID_CEILING) + TID_FLOOR;
                 switch (genericBuffer.getOpcode()) {
                     case ReadRequest:
-                        new ReadRequestServlet(packet).start();
+                        new ReadRequestServlet(packet, tid).start();
                         break;
                     case WriteRequest:
-                        new WriteRequestServlet(packet).start();
+                        new WriteRequestServlet(packet, tid).start();
                         break;
                     default:
 

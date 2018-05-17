@@ -1,13 +1,17 @@
 package com.guym4c.uni.networks.coursework2.server;
 
+import com.guym4c.uni.networks.coursework2.ByteArray;
+
+import javax.xml.crypto.Data;
+import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.SocketException;
 
 public class ReadRequestServlet extends RequestServlet {
 
-    private
 
-    public ReadRequestServlet(byte[] bytes) throws SocketException {
-        super(bytes);
+    public ReadRequestServlet(DatagramPacket packet, int tid) throws SocketException {
+        super(packet, tid);
     }
 
     @Override
@@ -16,8 +20,9 @@ public class ReadRequestServlet extends RequestServlet {
     }
 
     @Override
-    void processReceived(byte[] bytes) {
-        if
+    void receive(DatagramPacket packet) throws IOException {
+
     }
+
 
 }

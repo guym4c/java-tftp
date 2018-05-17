@@ -33,7 +33,7 @@ public class TftpErrorPacketBuffer extends GenericTftpPacketBuffer {
     }
 
     @Override
-    public ArrayList<Byte> getByteBuffer() {
+    public ByteArray getByteBuffer() {
         return new ByteArray() {{
             addInt(getOpcode().toInt());
             addInt(errorCode.toInt());

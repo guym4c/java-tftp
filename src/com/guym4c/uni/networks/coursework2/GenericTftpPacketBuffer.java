@@ -29,7 +29,7 @@ public class GenericTftpPacketBuffer {
         this.opcode = opcode;
     }
 
-    public ArrayList<Byte> getByteBuffer() {
+    public ByteArray getByteBuffer() {
         return new ByteArray() {{
             addZeroes();
             addInt(getOpcode().toInt());

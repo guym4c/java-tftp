@@ -20,4 +20,13 @@ public class ByteArray extends ArrayList<Byte> {
     public void addZeroes() {
         this.add((byte) 0);
     }
+
+    public byte[] toPrimitive() {
+        byte[] bytes = new byte[this.size()];
+        int i = 0;
+        for (byte b : this) {
+            bytes[i++] = b;
+        }
+        return bytes;
+    }
 }

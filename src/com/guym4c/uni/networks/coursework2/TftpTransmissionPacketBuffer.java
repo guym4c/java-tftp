@@ -20,7 +20,7 @@ public class TftpTransmissionPacketBuffer extends GenericTftpPacketBuffer {
     }
 
     @Override
-    public ArrayList<Byte> getByteBuffer() {
+    public ByteArray getByteBuffer() {
         return new ByteArray() {{
             addZeroes();
             addInt(getOpcode().toInt());

@@ -48,6 +48,6 @@ public class RequestPacketBuffer extends GenericPacketBuffer {
         super(getIntFromByte(bytes[1]));
         ArrayList<String> data = getZeroDelimitedData(Arrays.copyOfRange(bytes, STRING_DATA_OFFSET, bytes.length - STRING_DATA_OFFSET));
         this.filename = data.get(0);
-        this.mode = Mode.valueOf(data.get(1));
+        this.mode = Mode.fromString(data.get(1));
     }
 }

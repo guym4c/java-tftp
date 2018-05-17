@@ -12,4 +12,11 @@ public abstract class RequestServlet extends Thread {
         previous = new DatagramPacket(new byte[MAX_PAYLOAD_SIZE], MAX_PAYLOAD_SIZE);
     }
 
+    public DatagramPacket getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(DatagramPacket previous) {
+        this.previous = previous;
+    }
 }

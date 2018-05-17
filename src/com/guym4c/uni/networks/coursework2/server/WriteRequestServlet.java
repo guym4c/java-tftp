@@ -61,6 +61,8 @@ public class WriteRequestServlet extends RequestServlet {
         TftpDataPacketBuffer previousData = (TftpDataPacketBuffer) received;
         if (dataBuffer.getBlock() == previousData.getBlock() + 1) {
             bufferedWriter.write(dataBuffer.getData());
+        } else {
+            resend();
         }
 
         if (dataBuffer.isTerminating()) {

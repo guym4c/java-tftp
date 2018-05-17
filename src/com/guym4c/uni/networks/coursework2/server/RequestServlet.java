@@ -53,6 +53,10 @@ public abstract class RequestServlet extends Thread {
         sent = packet;
     }
 
+    protected void resend() throws IOException {
+        send(sent);
+    }
+
     abstract void receive(DatagramPacket packet) throws IOException;
 
 }

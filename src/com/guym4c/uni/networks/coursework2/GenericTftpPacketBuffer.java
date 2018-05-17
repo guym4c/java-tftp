@@ -39,11 +39,15 @@ public abstract class GenericTftpPacketBuffer {
             while (bytes[i] != 0) {
                 i++;
             }
-            results.add(new String(Arrays.copyOfRange(bytes, base, i), StandardCharsets.UTF_8));
+            results.add(getStringFromBytes(Arrays.copyOfRange(bytes, base, i)));
             base = i;
         }
 
         return results;
+    }
+
+    static String getStringFromBytes(byte[] bytes) {
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 
     static int getIntFromByte(byte b) {

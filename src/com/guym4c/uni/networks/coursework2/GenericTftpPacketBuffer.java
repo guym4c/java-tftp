@@ -31,7 +31,7 @@ public abstract class GenericTftpPacketBuffer {
 
     public abstract ArrayList<Byte> getByteBuffer();
 
-    static ArrayList<String> getZeroDelimitedData(byte[] bytes) {
+    protected static ArrayList<String> getZeroDelimitedData(byte[] bytes) {
         ArrayList<String> results = new ArrayList<>();
         int i = 0;
         int base = 0;
@@ -46,11 +46,11 @@ public abstract class GenericTftpPacketBuffer {
         return results;
     }
 
-    static String getStringFromBytes(byte[] bytes) {
+    protected static String getStringFromBytes(byte[] bytes) {
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
-    static int getIntFromByte(byte b) {
+    protected static int getIntFromByte(byte b) {
         return new BigInteger(new byte[] {b}).intValue();
     }
 

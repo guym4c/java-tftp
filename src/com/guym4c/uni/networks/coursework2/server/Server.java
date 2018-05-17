@@ -30,10 +30,10 @@ public class Server {
 
                 switch (genericBuffer.getOpcode()) {
                     case ReadRequest:
-                        new ReadRequestServlet(bytes).start();
+                        new ReadRequestServlet(packet).start();
                         break;
                     case WriteRequest:
-                        new WriteRequestServlet(bytes).start();
+                        new WriteRequestServlet(packet).start();
                         break;
                     default:
 

@@ -32,6 +32,17 @@ public class TftpDataPacketBuffer extends TftpTransmissionPacketBuffer {
         this.terminating = terminating;
     }
 
+    @Override
+    public ByteArray getByteBuffer() {
+        return new ByteArray() {{
+            addZeroes();
+            addInt(getOpcode().toInt());
+            addZeroes();
+            addInt(getBlock());
+            addString(data);
+        }};
+    }
+
     public TftpDataPacketBuffer(byte[] bytes) {
         super(bytes);
         this.data = getStringFromBytes(Arrays.copyOfRange(bytes, STRING_DATA_OFFSET, bytes.length - 1));

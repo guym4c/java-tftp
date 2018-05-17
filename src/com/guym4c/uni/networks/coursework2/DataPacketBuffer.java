@@ -10,14 +10,14 @@ public class DataPacketBuffer extends TransmissionPacketBuffer {
     private String data;
     private boolean terminating;
 
-    public DataPacketBuffer(TftpOpcode opcode, int block, String data, boolean terminating) {
+    public DataPacketBuffer(Opcode opcode, int block, String data, boolean terminating) {
         super(opcode, block);
         this.data = data;
         this.terminating = terminating;
     }
 
     public DataPacketBuffer(int block, String data, boolean terminating) {
-        super(TftpOpcode.Data, block);
+        super(Opcode.Data, block);
         this.data = data;
         this.terminating = terminating;
     }

@@ -1,6 +1,6 @@
 package com.guym4c.uni.networks.coursework2;
 
-public enum TftpErrorCode {
+public enum ErrorCode {
 
     UnknownError(0),
     NotFound(1),
@@ -13,7 +13,7 @@ public enum TftpErrorCode {
 
     private int value;
 
-    TftpErrorCode(final int value) {
+    ErrorCode(final int value) {
         this.value = value;
     }
 
@@ -25,13 +25,13 @@ public enum TftpErrorCode {
         return this.getValue();
     }
 
-    public static TftpErrorCode fromInt(int i) {
-        for (TftpErrorCode errorCode : TftpErrorCode.values()) {
+    public static ErrorCode fromInt(int i) {
+        for (ErrorCode errorCode : ErrorCode.values()) {
             if (errorCode.value == i) {
                 return errorCode;
             }
         }
-        return TftpErrorCode.UnknownError;
+        return ErrorCode.UnknownError;
     }
 
 }

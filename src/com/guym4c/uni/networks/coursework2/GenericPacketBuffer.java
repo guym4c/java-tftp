@@ -7,25 +7,25 @@ import java.util.Arrays;
 
 public class GenericPacketBuffer {
 
-    private TftpOpcode opcode;
+    private Opcode opcode;
 
-    public GenericPacketBuffer(TftpOpcode opcode) {
+    public GenericPacketBuffer(Opcode opcode) {
         this.opcode = opcode;
     }
 
     public GenericPacketBuffer(int opcode) {
-        this.opcode = TftpOpcode.fromInt(opcode);
+        this.opcode = Opcode.fromInt(opcode);
     }
 
     public GenericPacketBuffer(byte[] bytes) {
-        this.opcode = TftpOpcode.fromInt(bytes[1]);
+        this.opcode = Opcode.fromInt(bytes[1]);
     }
 
-    public TftpOpcode getOpcode() {
+    public Opcode getOpcode() {
         return opcode;
     }
 
-    public void setOpcode(TftpOpcode opcode) {
+    public void setOpcode(Opcode opcode) {
         this.opcode = opcode;
     }
 

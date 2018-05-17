@@ -2,7 +2,7 @@ package com.guym4c.uni.networks.coursework2;
 
 import java.math.BigInteger;
 
-public enum TftpOpcode {
+public enum Opcode {
 
     ReadRequest(1),
     WriteRequest(2),
@@ -12,7 +12,7 @@ public enum TftpOpcode {
 
     private int value;
 
-    TftpOpcode(final int value) {
+    Opcode(final int value) {
         this.value = value;
     }
 
@@ -24,8 +24,8 @@ public enum TftpOpcode {
         return this.getValue();
     }
 
-    public static TftpOpcode fromInt(int i) {
-        for (TftpOpcode opcode : TftpOpcode.values()) {
+    public static Opcode fromInt(int i) {
+        for (Opcode opcode : Opcode.values()) {
             if (opcode.value == i) {
                 return opcode;
             }
@@ -33,7 +33,7 @@ public enum TftpOpcode {
         throw new IllegalArgumentException("No opcode with that index");
     }
 
-    public static TftpOpcode fromByte(byte b) {
+    public static Opcode fromByte(byte b) {
         return fromInt(new BigInteger(new byte[] {b}).intValue());
     }
 

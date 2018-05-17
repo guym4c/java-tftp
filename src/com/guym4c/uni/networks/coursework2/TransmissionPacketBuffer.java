@@ -4,13 +4,13 @@ public class TransmissionPacketBuffer extends GenericPacketBuffer {
 
     private int block;
 
-    public TransmissionPacketBuffer(TftpOpcode opcode, int block) {
+    public TransmissionPacketBuffer(Opcode opcode, int block) {
         super(opcode);
         this.block = block;
     }
 
     public TransmissionPacketBuffer(int block) {
-        super(TftpOpcode.Acknowledgement);
+        super(Opcode.Acknowledgement);
         this.block = block;
     }
 

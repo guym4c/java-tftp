@@ -10,7 +10,7 @@ public class RequestPacketBuffer extends GenericPacketBuffer {
     private String filename;
     private String mode;
 
-    public RequestPacketBuffer(TftpOpcode opcode, String filename, String mode) {
+    public RequestPacketBuffer(Opcode opcode, String filename, String mode) {
         super(opcode);
         this.filename = filename;
         this.mode = mode;

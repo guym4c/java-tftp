@@ -6,20 +6,20 @@ public class ErrorPacketBuffer extends GenericPacketBuffer {
 
     private static final int STRING_DATA_OFFSET = 4;
 
-    private TftpErrorCode errorCode;
+    private ErrorCode errorCode;
     private String message;
 
-    public ErrorPacketBuffer(TftpErrorCode errorCode, String message) {
-        super(TftpOpcode.Error);
+    public ErrorPacketBuffer(ErrorCode errorCode, String message) {
+        super(Opcode.Error);
         this.errorCode = errorCode;
         this.message = message;
     }
 
-    public TftpErrorCode getErrorCode() {
+    public ErrorCode getErrorCode() {
         return errorCode;
     }
 
-    public void setErrorCode(TftpErrorCode errorCode) {
+    public void setErrorCode(ErrorCode errorCode) {
         this.errorCode = errorCode;
     }
 
@@ -43,7 +43,7 @@ public class ErrorPacketBuffer extends GenericPacketBuffer {
 
     public ErrorPacketBuffer(byte[] bytes) {
         super(getIntFromByte(bytes[1]));
-        this.errorCode = TftpErrorCode.fromInt(getIntFromByte(bytes[3]));
+        this.errorCode = ErrorCode.fromInt(getIntFromByte(bytes[3]));
         this.message = getZeroDelimitedData(Arrays.copyOfRange(bytes, STRING_DATA_OFFSET, bytes.length - STRING_DATA_OFFSET))
                 .get(0);
     }

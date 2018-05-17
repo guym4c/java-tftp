@@ -52,11 +52,15 @@ public class GenericPacketBuffer {
                 quit = true;
             }
         }
+        if (i == bytes.length) {
+            results.add(getStringFromBytes(Arrays.copyOfRange(bytes, base, bytes.length - 1)));
+        }
         return results;
     }
 
     protected static String getStringFromBytes(byte[] bytes) {
-        return new String(bytes, StandardCharsets.UTF_8);
+        return new String(bytes, StandardCharsets.UTF_8)
+                .replace("\n", System.lineSeparator());
     }
 
     protected static int getIntFromByte(byte b) {

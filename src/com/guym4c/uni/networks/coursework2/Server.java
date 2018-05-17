@@ -53,8 +53,9 @@ public class Server {
                                 }
                             }
                         }.start();
+                        break;
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
 

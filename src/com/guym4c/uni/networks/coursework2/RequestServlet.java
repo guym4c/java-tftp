@@ -11,7 +11,7 @@ import java.net.SocketException;
 public abstract class RequestServlet extends Thread {
 
     protected static final int MAX_PAYLOAD_SIZE = 512;
-    protected static final int TIMEOUT = 200;
+    protected static final int TIMEOUT = 20 * 1000; //ms
 
     protected DatagramPacket sent;
     protected GenericPacketBuffer received;

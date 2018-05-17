@@ -1,5 +1,7 @@
 package com.guym4c.uni.networks.coursework2;
 
+import java.math.BigInteger;
+
 public enum TftpOpcode {
 
     ReadRequest(1),
@@ -29,6 +31,10 @@ public enum TftpOpcode {
             }
         }
         throw new IllegalArgumentException("No opcode with that index");
+    }
+
+    public static TftpOpcode fromByte(byte b) {
+        return fromInt(new BigInteger(new byte[] {b}).intValue());
     }
 
 }

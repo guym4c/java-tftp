@@ -36,6 +36,7 @@ public class GenericTftpPacketBuffer {
         }};
     }
 
+
     protected static ArrayList<String> getZeroDelimitedData(byte[] bytes) {
         ArrayList<String> results = new ArrayList<>();
         int i = 0;

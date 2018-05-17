@@ -56,8 +56,8 @@ public class WriteRequestServlet extends RequestServlet {
         byte[] bytes = packet.getData();
 
         DataPacketBuffer dataBuffer = new DataPacketBuffer(bytes);
-        int previousBlock = -1;
-        if (dataBuffer.getBlock() > 0) {
+        int previousBlock = 0;
+        if (dataBuffer.getBlock() > 1) {
             DataPacketBuffer previousData = (DataPacketBuffer) received;
             previousBlock = previousData.getBlock();
         }

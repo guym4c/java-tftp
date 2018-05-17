@@ -1,10 +1,7 @@
 package com.guym4c.uni.networks.coursework2;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.*;
 
 public abstract class CommThread extends Thread {
 
@@ -25,6 +22,18 @@ public abstract class CommThread extends Thread {
     public CommThread(DatagramPacket packet, int tid, String name) throws SocketException {
         super(name + tid);
         initialiseCommThread(packet, tid);
+    }
+
+    public CommThread(String address, int port, int tid, String name) throws SocketException {
+        super(name + tid);
+        sent = new DatagramPacket(new byte[MAX_PAYLOAD_SIZE + 4], MAX_PAYLOAD_SIZE + 4);
+        socket = new DatagramSocket(tid);
+        try {
+            sendAddress = InetAddress.getByName(address);
+        } catch (UnknownHostException e) {
+
+        }
+        sendPort = port;
     }
 
     private void initialiseCommThread(DatagramPacket packet, int tid) throws SocketException {

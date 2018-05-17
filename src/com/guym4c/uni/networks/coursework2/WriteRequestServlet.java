@@ -32,7 +32,6 @@ public class WriteRequestServlet extends RequestServlet {
             DatagramPacket packet = new DatagramPacket(new byte[MAX_PAYLOAD_SIZE + 4], MAX_PAYLOAD_SIZE + 4);
             try {
                 socket.receive(packet);
-                System.out.println("received");
                 receive(packet);
             } catch (SocketTimeoutException timeout) {
                 if (terminated) {

@@ -13,13 +13,13 @@ public class DataPacketBuffer extends TransmissionPacketBuffer {
     public DataPacketBuffer(Opcode opcode, int block, String data) {
         super(opcode, block);
         this.data = data;
-        this.terminating = false;
+        this.terminating = data.length() < MAX_PAYLOAD_SIZE;
     }
 
     public DataPacketBuffer(int block, String data) {
         super(Opcode.Data, block);
         this.data = data;
-        this.terminating = false;
+        this.terminating = data.length() < MAX_PAYLOAD_SIZE;
     }
 
     public String getData() {
@@ -52,7 +52,7 @@ public class DataPacketBuffer extends TransmissionPacketBuffer {
     public DataPacketBuffer(byte[] bytes) {
         super(bytes);
         this.data = getStringFromBytes(Arrays.copyOfRange(bytes, STRING_DATA_OFFSET, bytes.length - 1));
-        this.terminating = bytes.length - 1 == MAX_PAYLOAD_SIZE;
+        this.terminating = bytes.length - 1 < MAX_PAYLOAD_SIZE;
 
     }
 }

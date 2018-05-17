@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class GenericTftpPacketBuffer {
+public class GenericTftpPacketBuffer {
 
     private TftpOpcode opcode;
 
@@ -29,7 +29,12 @@ public abstract class GenericTftpPacketBuffer {
         this.opcode = opcode;
     }
 
-    public abstract ArrayList<Byte> getByteBuffer();
+    public ArrayList<Byte> getByteBuffer() {
+        return new ByteArray() {{
+            addZeroes();
+            addInt(getOpcode().toInt());
+        }};
+    }
 
     protected static ArrayList<String> getZeroDelimitedData(byte[] bytes) {
         ArrayList<String> results = new ArrayList<>();
@@ -42,7 +47,6 @@ public abstract class GenericTftpPacketBuffer {
             results.add(getStringFromBytes(Arrays.copyOfRange(bytes, base, i)));
             base = i;
         }
-
         return results;
     }
 

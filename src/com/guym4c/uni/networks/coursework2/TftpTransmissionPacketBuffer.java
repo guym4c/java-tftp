@@ -1,17 +1,14 @@
 package com.guym4c.uni.networks.coursework2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TftpTransmissionPacketBuffer extends GenericTftpPacketBuffer {
 
     private int block;
-    private String data;
 
-    public TftpTransmissionPacketBuffer(TftpOpcode opcode) {
+    public TftpTransmissionPacketBuffer(TftpOpcode opcode, int block) {
         super(opcode);
-        block = 0;
-        data = "";
+        this.block = block;
     }
 
     public int getBlock() {
@@ -22,14 +19,6 @@ public class TftpTransmissionPacketBuffer extends GenericTftpPacketBuffer {
         this.block = block;
     }
 
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
     @Override
     public ArrayList<Byte> getByteBuffer() {
         return new ByteArray() {{
@@ -37,7 +26,11 @@ public class TftpTransmissionPacketBuffer extends GenericTftpPacketBuffer {
             addInt(getOpcode().toInt());
             addZeroes();
             addInt(block);
-            if (data.length() > 0) addString(data);
         }};
+    }
+
+    public TftpTransmissionPacketBuffer(byte[] bytes) {
+        super(getIntFromByte(bytes[1]));
+        this.block = getIntFromByte(bytes[3]);
     }
 }

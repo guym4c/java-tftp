@@ -1,10 +1,13 @@
 package com.guym4c.uni.networks.coursework2;
 
+import javax.print.DocFlavor;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TftpRequestPacketBuffer extends GenericTftpPacketBuffer {
+
+    private static final int STRING_DATA_OFFSET = 2;
 
     private String filename;
     private String mode;
@@ -45,7 +48,7 @@ public class TftpRequestPacketBuffer extends GenericTftpPacketBuffer {
 
     public TftpRequestPacketBuffer(byte[] bytes) {
         super(getIntFromByte(bytes[1]));
-        ArrayList<String> data = getZeroDelimitedData(Arrays.copyOfRange(bytes, 2, bytes.length - 2));
+        ArrayList<String> data = getZeroDelimitedData(Arrays.copyOfRange(bytes, STRING_DATA_OFFSET, bytes.length - STRING_DATA_OFFSET));
         this.filename = data.get(0);
         this.mode = data.get(1);
     }

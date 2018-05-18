@@ -4,29 +4,29 @@ import java.util.Arrays;
 
 public class DataPacketBuffer extends TransmissionPacketBuffer {
 
-    private static final int STRING_DATA_OFFSET = 4;
+    private static final int PAYLOAD_DATA_OFFSET = 4;
     private static final int MAX_PAYLOAD_SIZE = 512;
 
-    private String data;
+    private byte[] data;
     private boolean terminating;
 
-    public DataPacketBuffer(Opcode opcode, int block, String data) {
+    public DataPacketBuffer(Opcode opcode, int block, byte[] data) {
         super(opcode, block);
         this.data = data;
-        this.terminating = data.length() < MAX_PAYLOAD_SIZE;
+        this.terminating = data.length < MAX_PAYLOAD_SIZE;
     }
 
-    public DataPacketBuffer(int block, String data) {
+    public DataPacketBuffer(int block, byte[] data) {
         super(Opcode.Data, block);
         this.data = data;
-        this.terminating = data.length() < MAX_PAYLOAD_SIZE;
+        this.terminating = data.length < MAX_PAYLOAD_SIZE;
     }
 
-    public String getData() {
+    public byte[] getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(byte[] data) {
         this.data = data;
     }
 
@@ -45,13 +45,15 @@ public class DataPacketBuffer extends TransmissionPacketBuffer {
             addInt(getOpcode().toInt());
             addZeroes();
             addInt(getBlock());
-            addString(data);
+            addBytes(data);
         }};
     }
 
     public DataPacketBuffer(byte[] bytes) {
         super(bytes);
-        this.data = getNullDelimitedData(Arrays.copyOfRange(bytes, STRING_DATA_OFFSET, bytes.length - 1)).get(0);
+        this.data = getPayloadBytes(Arrays.copyOfRange(bytes, PAYLOAD_DATA_OFFSET, bytes.length - 1));
+
         this.terminating = bytes.length - 1 < MAX_PAYLOAD_SIZE + 4;
     }
+
 }

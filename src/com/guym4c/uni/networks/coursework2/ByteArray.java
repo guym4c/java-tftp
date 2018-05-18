@@ -21,6 +21,12 @@ public class ByteArray extends ArrayList<Byte> {
         this.add((byte) 0);
     }
 
+    public void addBytes(byte[] bytes) {
+        for (byte b : bytes) {
+            this.add(b);
+        }
+    }
+
     public byte[] toPrimitive() {
         byte[] bytes = new byte[this.size()];
         int i = 0;

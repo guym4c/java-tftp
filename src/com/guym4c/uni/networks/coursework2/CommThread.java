@@ -9,6 +9,8 @@ public abstract class CommThread extends Thread {
     protected static final int MAX_META_SIZE = 4;
     protected static final int TIMEOUT = 20 * 1000; //ms
     protected static final int BLOCK_MAX_VALUE = 127;
+    protected static final Mode DEFAULT_MODE = Mode.NetAscii;
+    protected static final String THREAD_NAME_PREFIX = "CommThread";
     protected int maxPacketSize;
 
     protected DatagramPacket sent;
@@ -16,15 +18,12 @@ public abstract class CommThread extends Thread {
     protected DatagramSocket socket;
     protected InetAddress sendAddress;
     protected int sendPort;
-    protected int recentBlock;
+    protected int lastSentBlock;
+    protected boolean terminated;
+    protected boolean destroyable;
 
     public CommThread(DatagramPacket packet, int tid) throws SocketException {
-        super("CommThread" + tid);
-        initialiseCommThread(packet, tid);
-    }
-
-    public CommThread(DatagramPacket packet, int tid, String name) throws SocketException {
-        super(name + tid);
+        super(THREAD_NAME_PREFIX + tid);
         initialiseCommThread(packet, tid);
     }
 
@@ -47,7 +46,9 @@ public abstract class CommThread extends Thread {
         socket = new DatagramSocket(tid);
         sendAddress = packet.getAddress();
         sendPort = packet.getPort();
-        recentBlock = 0;
+        lastSentBlock = 0;
+        terminated = false;
+        destroyable = false;
     }
 
     protected void error(ErrorCode errorCode, String message) throws IOException {
@@ -83,11 +84,6 @@ public abstract class CommThread extends Thread {
 
     protected void resend() {
         send(sent);
-    }
-
-    protected int incrementBlock() {
-        recentBlock = ++recentBlock % BLOCK_MAX_VALUE;
-        return recentBlock;
     }
 
     abstract void receive(DatagramPacket packet);

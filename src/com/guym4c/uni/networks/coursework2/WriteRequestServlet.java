@@ -8,13 +8,9 @@ public class WriteRequestServlet extends RequestServlet {
 
     private FileOutputStream fileWriter;
     private File file;
-    private boolean terminated;
-    private boolean destroyable;
 
     public WriteRequestServlet(DatagramPacket packet, int tid) throws IOException {
         super(packet, tid);
-        terminated = false;
-        destroyable = false;
 
         RequestPacketBuffer requestBuffer = new RequestPacketBuffer(packet.getData());
 

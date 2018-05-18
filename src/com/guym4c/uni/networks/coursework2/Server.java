@@ -38,11 +38,7 @@ public class Server extends NetworkObject {
                             @Override
                             public void run() {
                                 ErrorPacketBuffer errorBuffer = new ErrorPacketBuffer(ErrorCode.UnknownError, "Unknown error");
-                                try {
-                                    send(errorBuffer.getByteBuffer());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+                                send(errorBuffer.getByteBuffer());
                             }
                         }.start();
                         break;

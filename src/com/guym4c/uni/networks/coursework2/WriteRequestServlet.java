@@ -44,11 +44,7 @@ public class WriteRequestServlet extends RequestServlet {
                     }
                     destroyable = true;
                 } else {
-                    try {
-                        send(sent);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    resend();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -57,7 +53,7 @@ public class WriteRequestServlet extends RequestServlet {
     }
 
     @Override
-    void receive(DatagramPacket packet) throws IOException {
+    void receive(DatagramPacket packet) {
 
         byte[] bytes = packet.getData();
 

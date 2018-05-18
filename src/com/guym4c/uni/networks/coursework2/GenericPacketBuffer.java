@@ -36,8 +36,7 @@ public class GenericPacketBuffer {
         }};
     }
 
-
-    protected static ArrayList<String> getNullDelimitedData(byte[] bytes) {
+    protected static ArrayList<String> getNullDelimitedStrings(byte[] bytes) {
         ArrayList<String> results = new ArrayList<>();
         int i = 0;
         int base = 0;
@@ -65,6 +64,14 @@ public class GenericPacketBuffer {
 
     protected static int getIntFromByte(byte b) {
         return new BigInteger(new byte[] {b}).intValue();
+    }
+
+    protected static byte[] getPayloadBytes(byte[] bytes) {
+        int i = bytes.length;
+        do {
+            i--;
+        } while (bytes[i] == 0);
+        return Arrays.copyOfRange(bytes, 0, i);
     }
 
 }

@@ -6,8 +6,8 @@ import java.net.SocketTimeoutException;
 
 public class WriteRequestServlet extends RequestServlet {
 
-    private FileWriter fileWriter;
-    private BufferedWriter bufferedWriter;
+    private FileOutputStream fileWriter;
+    private File file;
     private boolean terminated;
     private boolean destroyable;
 
@@ -18,8 +18,8 @@ public class WriteRequestServlet extends RequestServlet {
 
         RequestPacketBuffer requestBuffer = new RequestPacketBuffer(packet.getData());
 
-        fileWriter = new FileWriter(requestBuffer.getFilename());
-        bufferedWriter = new BufferedWriter(fileWriter);
+        file = new File(requestBuffer.getFilename());
+        fileWriter = new FileOutputStream(file);
 
         TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(0);
 
@@ -29,7 +29,7 @@ public class WriteRequestServlet extends RequestServlet {
     @Override
     public void run() {
         while (!destroyable) {
-            DatagramPacket packet = new DatagramPacket(new byte[MAX_PAYLOAD_SIZE + 4], MAX_PAYLOAD_SIZE + 4);
+            DatagramPacket packet = new DatagramPacket(new byte[maxPacketSize], maxPacketSize);
             try {
                 socket.receive(packet);
                 receive(packet);
@@ -37,7 +37,7 @@ public class WriteRequestServlet extends RequestServlet {
                 if (terminated) {
                     socket.close();
                     try {
-                        bufferedWriter.close();
+                        fileWriter.flush();
                         fileWriter.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -68,7 +68,11 @@ public class WriteRequestServlet extends RequestServlet {
             previousBlock = previousData.getBlock();
         }
         if (dataBuffer.getBlock() == previousBlock + 1) {
-            bufferedWriter.write(dataBuffer.getData());
+            try {
+                fileWriter.write(dataBuffer.getData());
+            } catch (IOException e) {
+                error();
+            }
         } else {
             resend();
         }

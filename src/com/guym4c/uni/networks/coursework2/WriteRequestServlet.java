@@ -69,6 +69,7 @@ public class WriteRequestServlet extends RequestServlet {
             } catch (IOException e) {
                 error();
             }
+            received = dataBuffer;
         } else {
             resend();
         }

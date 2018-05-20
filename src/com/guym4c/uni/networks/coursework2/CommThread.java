@@ -9,7 +9,7 @@ public abstract class CommThread extends Thread {
     protected static final int MAX_META_SIZE = 4;
     protected static final int TIMEOUT = 20 * 1000; //ms
     protected static final int BLOCK_MAX_VALUE = 127;
-    protected static final Mode DEFAULT_MODE = Mode.NetAscii;
+    protected static final Mode DEFAULT_MODE = Mode.Octet;
     protected static final String THREAD_NAME_PREFIX = "CommThread";
     protected int maxPacketSize;
 

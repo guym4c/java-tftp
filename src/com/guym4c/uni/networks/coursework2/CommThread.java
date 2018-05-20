@@ -40,6 +40,7 @@ public abstract class CommThread extends Thread {
     }
 
     private void initialiseCommThread(int tid) {
+        System.out.println("Starting " + this.getClass().getSimpleName() + " on " + tid + "\n");
         try {
             socket = new DatagramSocket(tid);
         } catch (SocketException e) {
@@ -76,6 +77,7 @@ public abstract class CommThread extends Thread {
     }
 
     protected void resend() {
+        System.out.println("Resend:");
         send(sent);
     }
 

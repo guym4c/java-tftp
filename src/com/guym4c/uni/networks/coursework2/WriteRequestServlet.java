@@ -19,11 +19,9 @@ public class WriteRequestServlet extends ReceiveThread {
 
         file = new File(requestBuffer.getFilename());
         fileWriter = new FileOutputStream(file);
+        sendPort = packet.getPort();
 
         TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(0);
-
-        System.out.println("Sent by " + this.getName());
-        System.out.println(acknowledgementBuffer);
 
         send(acknowledgementBuffer);
     }

@@ -11,10 +11,6 @@ public class WriteRequestClient extends SendThread {
         super(address, port, tid, filename);
 
         RequestPacketBuffer requestBuffer = new RequestPacketBuffer(Opcode.WriteRequest, filename, DEFAULT_MODE);
-
-        System.out.println("Sent by " + this.getName());
-        System.out.println(requestBuffer);
-
         send(requestBuffer);
     }
 

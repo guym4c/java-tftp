@@ -40,8 +40,8 @@ public class TransmissionPacketBuffer extends GenericPacketBuffer {
     @Override
     public String toString() {
         return "TransmissionPacketBuffer{\n" +
-                "opcode=" + getOpcode().toString() + "\n" +
-                "block=" + block + "\n" +
+                "\topcode=" + getOpcode().toString() + "\n" +
+                "\tblock=" + block + "\n" +
                 "}\n";
     }
 }

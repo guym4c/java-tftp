@@ -54,9 +54,9 @@ public class RequestPacketBuffer extends GenericPacketBuffer {
     @Override
     public String toString() {
         return "RequestPacketBuffer{\n" +
-                "opcode=" + getOpcode().toString() + "\n" +
-                "filename='" + filename + "\'\n" +
-                ", mode=" + mode + "\n" +
+                "\topcode=" + getOpcode().toString() + "\n" +
+                "\tfilename='" + filename + "\'\n" +
+                "\tmode=" + mode + "\n" +
                 "}\n";
     }
 }

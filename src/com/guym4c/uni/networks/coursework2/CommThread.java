@@ -71,7 +71,7 @@ public abstract class CommThread extends Thread {
             e.printStackTrace();
         }
         sent = buffer;
-        System.out.println("Sent from " + this.getName());
+        System.out.println("Sent by " + this.getName());
         System.out.println(buffer);
     }
 

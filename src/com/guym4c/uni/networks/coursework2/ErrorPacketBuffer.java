@@ -51,9 +51,9 @@ public class ErrorPacketBuffer extends GenericPacketBuffer {
     @Override
     public String toString() {
         return "ErrorPacketBuffer{\n" +
-                "opcode=" + getOpcode().toString() + "\n" +
-                "errorCode=" + errorCode.toString() + "\n" +
-                ", message='" + message + "\'\n" +
+                "\topcode=" + getOpcode().toString() + "\n" +
+                "\terrorCode=" + errorCode.toString() + "\n" +
+                "\tmessage='" + message + "\'\n" +
                 "}\n";
     }
 }

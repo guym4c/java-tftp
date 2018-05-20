@@ -59,10 +59,10 @@ public class DataPacketBuffer extends TransmissionPacketBuffer {
     @Override
     public String toString() {
         return "DataPacketBuffer{" +
-                "opcode=" + getOpcode().toString() + "\n" +
-                "block=" + getBlock() + "\n" +
-                "data=\'" + getStringFromBytes(data) + "\'\n" +
-                "terminating=" + terminating + "\n" +
+                "\topcode=" + getOpcode().toString() + "\n" +
+                "\tblock=" + getBlock() + "\n" +
+                "\tdata=\'" + getStringFromBytes(data) + "\'\n" +
+                "\tterminating=" + terminating + "\n" +
                 "}\n";
     }
 }

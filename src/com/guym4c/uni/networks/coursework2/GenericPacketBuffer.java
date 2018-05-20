@@ -77,7 +77,7 @@ public class GenericPacketBuffer {
     @Override
     public String toString() {
         return "GenericPacketBuffer{\n" +
-                "opcode=" + opcode + "\n" +
+                "\topcode=" + opcode + "\n" +
                 "}\n";
     }
 }

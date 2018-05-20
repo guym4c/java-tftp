@@ -7,8 +7,8 @@ import java.net.SocketException;
 public class ReadRequestServlet extends SendThread {
 
 
-    public ReadRequestServlet(DatagramPacket packet, int tid) throws SocketException {
-        super(packet, tid);
+    public ReadRequestServlet(DatagramPacket packet, int tid, String filename) {
+        super(packet, tid, filename);
     }
 
     @Override

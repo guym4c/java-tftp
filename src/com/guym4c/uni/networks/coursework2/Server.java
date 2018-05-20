@@ -33,7 +33,7 @@ public class Server extends NetworkObject {
                         new WriteRequestServlet(packet, tid).start();
                         break;
                     default:
-                        new RequestServlet(packet, tid) {
+                        new CommThread(packet, tid) {
                             @Override
                             void receive(DatagramPacket packet) {
                                 error();

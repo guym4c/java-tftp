@@ -7,7 +7,7 @@ import java.net.SocketTimeoutException;
 import java.nio.file.Files;
 import java.util.Arrays;
 
-public class WriteRequestClient extends RequestClient {
+public class WriteRequestClient extends SendThread {
 
     private byte[] file;
     private int filePointer = 0;

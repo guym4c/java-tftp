@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.DatagramPacket;
 import java.net.SocketTimeoutException;
 
-public class WriteRequestServlet extends RequestServlet {
+public class WriteRequestServlet extends ReceiveThread {
 
     private FileOutputStream fileWriter;
     private File file;

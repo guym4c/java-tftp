@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.SocketException;
 
-public class ReadRequestClient extends RequestClient {
+public class ReadRequestClient extends ReceiveThread {
 
     public ReadRequestClient(String address, int port, String filename, int tid) throws SocketException {
         super(address, port, tid);

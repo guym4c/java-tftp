@@ -5,19 +5,19 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GenericPacketBuffer {
+public abstract class AbstractPacketBuffer {
 
     private Opcode opcode;
 
-    public GenericPacketBuffer(Opcode opcode) {
+    public AbstractPacketBuffer(Opcode opcode) {
         this.opcode = opcode;
     }
 
-    public GenericPacketBuffer(int opcode) {
+    public AbstractPacketBuffer(int opcode) {
         this.opcode = Opcode.fromInt(opcode);
     }
 
-    public GenericPacketBuffer(byte[] bytes) {
+    public AbstractPacketBuffer(byte[] bytes) {
         this.opcode = Opcode.fromInt(bytes[1]);
     }
 
@@ -29,12 +29,7 @@ public class GenericPacketBuffer {
         this.opcode = opcode;
     }
 
-    public ByteArray getByteBuffer() {
-        return new ByteArray() {{
-            addZeroes();
-            addInt(getOpcode().toInt());
-        }};
-    }
+    public abstract ByteArray getByteBuffer();
 
     protected static ArrayList<String> getNullDelimitedStrings(byte[] bytes) {
         ArrayList<String> results = new ArrayList<>();

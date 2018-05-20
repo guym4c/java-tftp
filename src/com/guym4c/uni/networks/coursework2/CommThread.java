@@ -13,64 +13,54 @@ public abstract class CommThread extends Thread {
     protected static final String THREAD_NAME_PREFIX = "CommThread";
     protected int maxPacketSize;
 
-    protected DatagramPacket sent;
-    protected GenericPacketBuffer received;
+    protected AbstractPacketBuffer sent;
+    protected AbstractPacketBuffer received;
     protected DatagramSocket socket;
     protected InetAddress sendAddress;
     protected int sendPort;
-    protected int lastSentBlock;
     protected boolean terminated;
     protected boolean destroyable;
 
-    public CommThread(DatagramPacket packet, int tid) throws SocketException {
+    public CommThread(DatagramPacket packet, int tid) {
         super(THREAD_NAME_PREFIX + tid);
-        initialiseCommThread(packet, tid);
+        sendAddress = packet.getAddress();
+        sendPort = packet.getPort();
+        initialiseCommThread(tid);
     }
 
-    public CommThread(String address, int port, int tid, String name) throws SocketException {
-        super(name + tid);
-        sent = new DatagramPacket(new byte[MAX_PAYLOAD_SIZE], MAX_PAYLOAD_SIZE + 4);
-        socket = new DatagramSocket(tid);
+    public CommThread(String address, int port, int tid) {
+        super(THREAD_NAME_PREFIX + tid);
         try {
             sendAddress = InetAddress.getByName(address);
         } catch (UnknownHostException e) {
             // do nothing
         }
         sendPort = port;
+        initialiseCommThread(tid);
     }
 
-    private void initialiseCommThread(DatagramPacket packet, int tid) throws SocketException {
+    private void initialiseCommThread(int tid) {
+        try {
+            socket = new DatagramSocket(tid);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
         maxPacketSize = MAX_PAYLOAD_SIZE + MAX_META_SIZE;
-        sent = new DatagramPacket(new byte[maxPacketSize], maxPacketSize);
-        received = new RequestPacketBuffer(packet.getData());
-        socket = new DatagramSocket(tid);
-        sendAddress = packet.getAddress();
-        sendPort = packet.getPort();
-        lastSentBlock = 0;
         terminated = false;
         destroyable = false;
     }
 
-    protected void error(ErrorCode errorCode, String message) throws IOException {
+    protected void error(ErrorCode errorCode, String message) {
         ErrorPacketBuffer errorPacketBuffer = new ErrorPacketBuffer(errorCode, message);
-        send(errorPacketBuffer.getByteBuffer());
+        send(errorPacketBuffer);
     }
 
     protected void error() {
-        try {
-            error(ErrorCode.UnknownError, "Unknown Error");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        error(ErrorCode.UnknownError, "Unknown Error");
     }
 
-    protected void send(ByteArray toSend) {
-        byte[] bytes = toSend.toPrimitive();
-        DatagramPacket send = new DatagramPacket(bytes, bytes.length);
-        send(send);
-    }
-
-    protected void send(DatagramPacket packet) {
+    protected void send(AbstractPacketBuffer buffer) {
+        DatagramPacket packet = new DatagramPacket(buffer.getByteBuffer().toPrimitive(), maxPacketSize);
         packet.setAddress(sendAddress);
         packet.setPort(sendPort);
         try {
@@ -79,7 +69,7 @@ public abstract class CommThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        sent = packet;
+        sent = buffer;
     }
 
     protected void resend() {

@@ -3,11 +3,10 @@ package com.guym4c.uni.networks.coursework2;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.SocketException;
 
 public class Client extends NetworkObject {
 
-    public Client() throws SocketException {
+    public Client() {
         super(generateTid());
     }
 

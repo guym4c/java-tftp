@@ -15,8 +15,12 @@ public abstract class NetworkObject {
 
     protected DatagramSocket socket;
 
-    public NetworkObject(int port) throws SocketException {
-        socket = new DatagramSocket(port);
+    public NetworkObject(int port) {
+        try {
+            socket = new DatagramSocket(port);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
     }
 
     protected static int generateTid() {

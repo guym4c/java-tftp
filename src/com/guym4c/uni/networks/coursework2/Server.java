@@ -11,15 +11,19 @@ public class Server extends NetworkObject {
     }
 
     @Override
-    public void run() throws IOException {
-
-        while (true) {
+    public void run() {
+        boolean terminate = false;
+        while (!terminate) {
             byte[] inBuffer = new byte[MAX_PAYLOAD_SIZE + 4];
             DatagramPacket packet = new DatagramPacket(inBuffer, MAX_PAYLOAD_SIZE);
-            socket.receive(packet);
+            try {
+                socket.receive(packet);
+            } catch (IOException e) {
+                terminate = true;
+            }
             byte[] bytes = packet.getData();
             try {
-                GenericPacketBuffer genericBuffer = new GenericPacketBuffer(bytes);
+                AbstractPacketBuffer genericBuffer = new AbstractPacketBuffer(bytes);
                 int tid = generateTid();
                 switch (genericBuffer.getOpcode()) {
                     case ReadRequest:
@@ -31,20 +35,20 @@ public class Server extends NetworkObject {
                     default:
                         new RequestServlet(packet, tid) {
                             @Override
-                            void receive(DatagramPacket packet) throws IOException {
+                            void receive(DatagramPacket packet) {
                                 error();
                             }
 
                             @Override
                             public void run() {
                                 ErrorPacketBuffer errorBuffer = new ErrorPacketBuffer(ErrorCode.UnknownError, "Unknown error");
-                                send(errorBuffer.getByteBuffer());
+                                send(errorBuffer);
                             }
                         }.start();
                         break;
                 }
             } catch (IOException e) {
-                System.err.println(e.getMessage());
+                terminate = true;
             }
 
         }

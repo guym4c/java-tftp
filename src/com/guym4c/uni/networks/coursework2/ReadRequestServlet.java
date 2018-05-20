@@ -17,7 +17,7 @@ public class ReadRequestServlet extends RequestServlet {
     }
 
     @Override
-    void receive(DatagramPacket packet) throws IOException {
+    void receive(DatagramPacket packet) {
 
     }
 

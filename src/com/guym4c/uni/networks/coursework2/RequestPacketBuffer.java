@@ -3,7 +3,7 @@ package com.guym4c.uni.networks.coursework2;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class RequestPacketBuffer extends GenericPacketBuffer {
+public class RequestPacketBuffer extends AbstractPacketBuffer {
 
     private static final int STRING_DATA_OFFSET = 2;
 

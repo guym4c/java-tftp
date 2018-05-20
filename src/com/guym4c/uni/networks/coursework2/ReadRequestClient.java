@@ -16,7 +16,7 @@ public class ReadRequestClient extends RequestClient {
     }
 
     @Override
-    void receive(DatagramPacket packet) throws IOException {
+    void receive(DatagramPacket packet) {
 
     }
 }

@@ -19,7 +19,7 @@ public class WriteRequestServlet extends ReceiveThread {
 
         TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(0);
 
-        send(acknowledgementBuffer.getByteBuffer());
+        send(acknowledgementBuffer);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class WriteRequestServlet extends ReceiveThread {
         }
 
         TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(0);
-        send(acknowledgementBuffer.getByteBuffer());
+        send(acknowledgementBuffer);
     }
 
 

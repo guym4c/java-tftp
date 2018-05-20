@@ -1,10 +1,10 @@
 package com.guym4c.uni.networks.coursework2;
 
-public class TransmissionPacketBuffer extends GenericPacketBuffer {
+public class TransmissionPacketBuffer extends AbstractPacketBuffer {
 
     private int block;
 
-    public TransmissionPacketBuffer(Opcode opcode, int block) {
+    protected TransmissionPacketBuffer(Opcode opcode, int block) {
         super(opcode);
         this.block = block;
     }

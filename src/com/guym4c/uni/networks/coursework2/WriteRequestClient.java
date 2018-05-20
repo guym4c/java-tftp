@@ -1,23 +1,17 @@
 package com.guym4c.uni.networks.coursework2;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.SocketTimeoutException;
-import java.nio.file.Files;
 import java.util.Arrays;
 
 public class WriteRequestClient extends SendThread {
 
-    private byte[] file;
-    private int filePointer = 0;
-
-    public WriteRequestClient(String address, int port, String filename, int tid) throws IOException {
-        super(address, port, tid);
-        file = Files.readAllBytes(new File(filename).toPath());
+    public WriteRequestClient(String address, int port, String filename, int tid) {
+        super(address, port, tid, filename);
 
         RequestPacketBuffer requestBuffer = new RequestPacketBuffer(Opcode.WriteRequest, filename, DEFAULT_MODE);
-        send(requestBuffer.getByteBuffer());
+        send(requestBuffer);
     }
 
     @Override
@@ -40,11 +34,11 @@ public class WriteRequestClient extends SendThread {
         byte[] bytes = packet.getData();
         TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(bytes);
 
-        if (acknowledgementBuffer.getBlock() != lastSentBlock || terminated) {
+        if (acknowledgementBuffer.getBlock() != getPreviousBlockNumber() || terminated) {
             destroyable = true;
         } else {
-            DataPacketBuffer dataBuffer = new DataPacketBuffer(incrementBlock(), getNextFileHunk());
-            send(dataBuffer.getByteBuffer());
+            DataPacketBuffer dataBuffer = new DataPacketBuffer(getNextBlock(), getNextFileHunk());
+            send(dataBuffer);
             received = acknowledgementBuffer;
         }
     }

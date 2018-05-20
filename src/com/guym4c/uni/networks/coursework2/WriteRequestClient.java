@@ -37,6 +37,9 @@ public class WriteRequestClient extends SendThread {
         if (acknowledgementBuffer.getBlock() != getPreviousBlockNumber() || terminated) {
             destroyable = true;
         } else {
+            if (acknowledgementBuffer.getBlock() == 0) {
+                sendPort = packet.getPort();
+            }
             DataPacketBuffer dataBuffer = new DataPacketBuffer(getNextBlock(), getNextFileHunk());
             send(dataBuffer);
             received = acknowledgementBuffer;

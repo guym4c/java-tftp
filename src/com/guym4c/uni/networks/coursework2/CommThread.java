@@ -60,7 +60,8 @@ public abstract class CommThread extends Thread {
     }
 
     protected void send(GenericPacketBuffer buffer) {
-        DatagramPacket packet = new DatagramPacket(buffer.getByteBuffer().toPrimitive(), maxPacketSize);
+        byte[] bytes = buffer.getByteBuffer().toPrimitive();
+        DatagramPacket packet = new DatagramPacket(bytes, bytes.length);
         packet.setAddress(sendAddress);
         packet.setPort(sendPort);
         try {

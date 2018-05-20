@@ -14,10 +14,16 @@ public class WriteRequestServlet extends ReceiveThread {
 
         RequestPacketBuffer requestBuffer = new RequestPacketBuffer(packet.getData());
 
+        System.out.println("Received by " + this.getName());
+        System.out.println(requestBuffer);
+
         file = new File(requestBuffer.getFilename());
         fileWriter = new FileOutputStream(file);
 
         TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(0);
+
+        System.out.println("Sent by " + this.getName());
+        System.out.println(acknowledgementBuffer);
 
         send(acknowledgementBuffer);
     }
@@ -54,6 +60,10 @@ public class WriteRequestServlet extends ReceiveThread {
         byte[] bytes = packet.getData();
 
         DataPacketBuffer dataBuffer = new DataPacketBuffer(bytes);
+
+        System.out.println("Received by " + this.getName());
+        System.out.println(dataBuffer);
+
         int previousBlock = 0;
         if (dataBuffer.getBlock() > 1) {
             DataPacketBuffer previousData = (DataPacketBuffer) received;

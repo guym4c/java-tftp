@@ -47,4 +47,13 @@ public class ErrorPacketBuffer extends GenericPacketBuffer {
         this.message = getNullDelimitedStrings(Arrays.copyOfRange(bytes, STRING_DATA_OFFSET, bytes.length - STRING_DATA_OFFSET))
                 .get(0);
     }
+
+    @Override
+    public String toString() {
+        return "ErrorPacketBuffer{\n" +
+                "opcode=" + getOpcode().toString() + "\n" +
+                "errorCode=" + errorCode.toString() + "\n" +
+                ", message='" + message + "\'\n" +
+                "}\n";
+    }
 }

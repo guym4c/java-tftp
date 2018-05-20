@@ -11,6 +11,10 @@ public class WriteRequestClient extends SendThread {
         super(address, port, tid, filename);
 
         RequestPacketBuffer requestBuffer = new RequestPacketBuffer(Opcode.WriteRequest, filename, DEFAULT_MODE);
+
+        System.out.println("Sent by " + this.getName());
+        System.out.println(requestBuffer);
+
         send(requestBuffer);
     }
 
@@ -33,6 +37,9 @@ public class WriteRequestClient extends SendThread {
     void receive(DatagramPacket packet) {
         byte[] bytes = packet.getData();
         TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(bytes);
+
+        System.out.println("Received by " + this.getName());
+        System.out.println(acknowledgementBuffer);
 
         if (acknowledgementBuffer.getBlock() != getPreviousBlockNumber() || terminated) {
             destroyable = true;

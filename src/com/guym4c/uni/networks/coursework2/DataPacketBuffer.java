@@ -56,4 +56,13 @@ public class DataPacketBuffer extends TransmissionPacketBuffer {
         this.terminating = bytes.length - 1 < MAX_PAYLOAD_SIZE + 4;
     }
 
+    @Override
+    public String toString() {
+        return "DataPacketBuffer{" +
+                "opcode=" + getOpcode().toString() + "\n" +
+                "block=" + getBlock() + "\n" +
+                "data=\'" + getStringFromBytes(data) + "\'\n" +
+                "terminating=" + terminating + "\n" +
+                "}\n";
+    }
 }

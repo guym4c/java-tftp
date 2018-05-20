@@ -50,4 +50,13 @@ public class RequestPacketBuffer extends GenericPacketBuffer {
         this.filename = data.get(0);
         this.mode = Mode.fromString(data.get(1));
     }
+
+    @Override
+    public String toString() {
+        return "RequestPacketBuffer{\n" +
+                "opcode=" + getOpcode().toString() + "\n" +
+                "filename='" + filename + "\'\n" +
+                ", mode=" + mode + "\n" +
+                "}\n";
+    }
 }

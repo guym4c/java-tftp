@@ -36,4 +36,12 @@ public class TransmissionPacketBuffer extends GenericPacketBuffer {
         super(getIntFromByte(bytes[1]));
         this.block = getIntFromByte(bytes[3]);
     }
+
+    @Override
+    public String toString() {
+        return "TransmissionPacketBuffer{\n" +
+                "opcode=" + getOpcode().toString() + "\n" +
+                "block=" + block + "\n" +
+                "}\n";
+    }
 }

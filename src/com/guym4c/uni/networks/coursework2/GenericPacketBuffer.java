@@ -74,4 +74,10 @@ public class GenericPacketBuffer {
         return Arrays.copyOfRange(bytes, 0, i);
     }
 
+    @Override
+    public String toString() {
+        return "GenericPacketBuffer{\n" +
+                "opcode=" + opcode + "\n" +
+                "}\n";
+    }
 }

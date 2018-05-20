@@ -2,7 +2,7 @@ package com.guym4c.uni.networks.coursework2;
 
 import java.util.Arrays;
 
-public class ErrorPacketBuffer extends AbstractPacketBuffer {
+public class ErrorPacketBuffer extends GenericPacketBuffer {
 
     private static final int STRING_DATA_OFFSET = 4;
 

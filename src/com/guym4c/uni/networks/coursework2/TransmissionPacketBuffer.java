@@ -1,6 +1,6 @@
 package com.guym4c.uni.networks.coursework2;
 
-public class TransmissionPacketBuffer extends AbstractPacketBuffer {
+public class TransmissionPacketBuffer extends GenericPacketBuffer {
 
     private int block;
 

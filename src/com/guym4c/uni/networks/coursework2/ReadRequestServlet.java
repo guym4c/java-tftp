@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.SocketException;
 
-public class ReadRequestServlet extends RequestServlet {
+public class ReadRequestServlet extends SendThread {
 
 
     public ReadRequestServlet(DatagramPacket packet, int tid) throws SocketException {

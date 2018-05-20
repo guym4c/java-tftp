@@ -23,7 +23,7 @@ public class Server extends NetworkObject {
             }
             byte[] bytes = packet.getData();
             try {
-                AbstractPacketBuffer genericBuffer = new AbstractPacketBuffer(bytes);
+                GenericPacketBuffer genericBuffer = new GenericPacketBuffer(bytes);
                 int tid = generateTid();
                 switch (genericBuffer.getOpcode()) {
                     case ReadRequest:

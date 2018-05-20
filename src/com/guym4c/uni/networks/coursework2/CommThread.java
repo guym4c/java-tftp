@@ -13,8 +13,8 @@ public abstract class CommThread extends Thread {
     protected static final String THREAD_NAME_PREFIX = "CommThread";
     protected int maxPacketSize;
 
-    protected AbstractPacketBuffer sent;
-    protected AbstractPacketBuffer received;
+    protected GenericPacketBuffer sent;
+    protected GenericPacketBuffer received;
     protected DatagramSocket socket;
     protected InetAddress sendAddress;
     protected int sendPort;
@@ -59,7 +59,7 @@ public abstract class CommThread extends Thread {
         error(ErrorCode.UnknownError, "Unknown Error");
     }
 
-    protected void send(AbstractPacketBuffer buffer) {
+    protected void send(GenericPacketBuffer buffer) {
         DatagramPacket packet = new DatagramPacket(buffer.getByteBuffer().toPrimitive(), maxPacketSize);
         packet.setAddress(sendAddress);
         packet.setPort(sendPort);

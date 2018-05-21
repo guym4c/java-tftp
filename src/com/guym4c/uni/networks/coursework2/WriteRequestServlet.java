@@ -50,6 +50,7 @@ public class WriteRequestServlet extends ReceiveThread {
                 e.printStackTrace();
             }
         }
+        System.out.println("Received: " + this.getName());
     }
 
     @Override
@@ -82,7 +83,7 @@ public class WriteRequestServlet extends ReceiveThread {
             terminated = true;
         }
 
-        TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(0);
+        TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(dataBuffer.getBlock());
         send(acknowledgementBuffer);
     }
 

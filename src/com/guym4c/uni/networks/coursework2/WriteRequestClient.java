@@ -27,6 +27,7 @@ public class WriteRequestClient extends SendThread {
                 e.printStackTrace();
             }
         }
+        System.out.println("Sent: " + this.getName());
     }
 
     @Override

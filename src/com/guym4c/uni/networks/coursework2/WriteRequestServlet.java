@@ -62,9 +62,7 @@ public class WriteRequestServlet extends ReceiveThread {
     @Override
     void receive(DatagramPacket packet) {
 
-        byte[] bytes = packet.getData();
-
-        DataPacketBuffer dataBuffer = new DataPacketBuffer(bytes);
+        DataPacketBuffer dataBuffer = new DataPacketBuffer(getBytesFromPacket(packet));
 
         System.out.println("Received by " + this.getName());
         System.out.println(dataBuffer);

@@ -2,6 +2,7 @@ package com.guym4c.uni.networks.coursework2;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public abstract class CommThread extends Thread {
@@ -119,6 +120,10 @@ public abstract class CommThread extends Thread {
 
     protected static String conclude(boolean success) {
         return success ? SUCCESS_MESSAGE : FAIL_MESSAGE;
+    }
+
+    protected byte[] getBytesFromPacket(DatagramPacket packet) {
+        return Arrays.copyOfRange(packet.getData(), 0, packet.getLength());
     }
 
     abstract void receive(DatagramPacket packet);

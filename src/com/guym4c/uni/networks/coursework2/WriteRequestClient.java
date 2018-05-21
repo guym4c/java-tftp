@@ -34,8 +34,8 @@ public class WriteRequestClient extends SendThread {
 
     @Override
     void receive(DatagramPacket packet) {
-        byte[] bytes = packet.getData();
-        TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(bytes);
+
+        TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(getBytesFromPacket(packet));
 
         System.out.println("Received by " + this.getName());
         System.out.println(acknowledgementBuffer);

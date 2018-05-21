@@ -16,24 +16,6 @@ public class WriteRequestClient extends SendThread {
     }
 
     @Override
-    public void run() {
-        while (!destroyable) {
-            DatagramPacket packet = new DatagramPacket(new byte[maxPacketSize], maxPacketSize);
-            try {
-                socket.receive(packet);
-                receive(packet);
-            } catch (SocketTimeoutException timeout) {
-                if (!attemptReSend()) {
-                    destroyable = true;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println(conclude(success));
-    }
-
-    @Override
     void receive(DatagramPacket packet) {
 
         TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(getBytesFromPacket(packet));

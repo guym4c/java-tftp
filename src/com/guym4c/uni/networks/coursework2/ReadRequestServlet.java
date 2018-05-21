@@ -23,15 +23,5 @@ public class ReadRequestServlet extends SendThread {
             destroyable = true;
             success = false;
         }
-
-
     }
-
-
-    @Override
-    void receive(DatagramPacket packet) {
-
-    }
-
-
 }

@@ -1,6 +1,8 @@
 package com.guym4c.uni.networks.coursework2;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.SocketTimeoutException;
 
@@ -43,14 +45,18 @@ public class WriteRequestServlet extends ReceiveThread {
                         e.printStackTrace();
                     }
                     destroyable = true;
+                    success = true;
                 } else {
-                    resend();
+                    if (!attemptReSend()) {
+                        destroyable = true;
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        System.out.println("Received: " + this.getName());
+
+        conclude(success);
     }
 
     @Override
@@ -75,12 +81,13 @@ public class WriteRequestServlet extends ReceiveThread {
                 error();
             }
             received = dataBuffer;
-        } else {
-            resend();
+        } else if (!attemptReSend()) {
+            destroyable = true;
         }
 
         if (dataBuffer.isTerminating()) {
             terminated = true;
+            success = true;
         }
 
         TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(dataBuffer.getBlock());

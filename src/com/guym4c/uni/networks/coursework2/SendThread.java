@@ -33,17 +33,4 @@ public abstract class SendThread extends CommThread {
         return (getPreviousBlockNumber() + 1) % BLOCK_MAX_VALUE;
     }
 
-    protected int getPreviousBlockNumber() {
-        switch (sent.getOpcode()) {
-            case ReadRequest:
-            case WriteRequest:
-                return 0;
-            case Data:
-            case Acknowledgement:
-                TransmissionPacketBuffer transmissionBuffer = (TransmissionPacketBuffer) sent;
-                return transmissionBuffer.getBlock();
-            default:
-                return -1;
-        }
-    }
 }

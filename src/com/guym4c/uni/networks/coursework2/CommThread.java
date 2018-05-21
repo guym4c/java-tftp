@@ -2,6 +2,7 @@ package com.guym4c.uni.networks.coursework2;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.HashMap;
 
 public abstract class CommThread extends Thread {
 
@@ -11,7 +12,10 @@ public abstract class CommThread extends Thread {
     protected static final int BLOCK_MAX_VALUE = 127;
     protected static final Mode DEFAULT_MODE = Mode.Octet;
     protected static final String THREAD_NAME_PREFIX = "CommThread";
+    protected static final String SUCCESS_MESSAGE = "Completed successfully";
+    protected static final String FAIL_MESSAGE = "Task failed";
     protected int maxPacketSize;
+    private static final int MAX_RETRIES = 4;
 
     protected GenericPacketBuffer sent;
     protected GenericPacketBuffer received;
@@ -20,6 +24,9 @@ public abstract class CommThread extends Thread {
     protected int sendPort;
     protected boolean terminated;
     protected boolean destroyable;
+    protected boolean success;
+
+    private HashMap<Integer, Integer> retries;
 
     public CommThread(DatagramPacket packet, int tid) {
         super(THREAD_NAME_PREFIX + tid);
@@ -49,6 +56,8 @@ public abstract class CommThread extends Thread {
         maxPacketSize = MAX_PAYLOAD_SIZE + MAX_META_SIZE;
         terminated = false;
         destroyable = false;
+        success = false;
+        retries = new HashMap<>();
     }
 
     protected void error(ErrorCode errorCode, String message) {
@@ -76,9 +85,40 @@ public abstract class CommThread extends Thread {
         System.out.println(buffer);
     }
 
-    protected void resend() {
-        System.out.println("Resend:");
-        send(sent);
+    protected boolean attemptReSend() {
+        int previousBlock = getPreviousBlockNumber();
+        retries.putIfAbsent(previousBlock, 0);
+        retries.put(previousBlock, retries.get(previousBlock) + 1);
+        if (retries.get(previousBlock) > MAX_RETRIES) {
+            return false;
+        } else {
+            System.out.println("Resend:");
+            send(sent);
+            return true;
+        }
+
+    }
+
+    protected int getPreviousBlockNumber() {
+        return getBlockNumber(sent);
+    }
+
+    protected static int getBlockNumber(GenericPacketBuffer buffer) {
+        switch (buffer.getOpcode()) {
+            case ReadRequest:
+            case WriteRequest:
+                return 0;
+            case Data:
+            case Acknowledgement:
+                TransmissionPacketBuffer transmissionBuffer = (TransmissionPacketBuffer) sent;
+                return transmissionBuffer.getBlock();
+            default:
+                return -1;
+        }
+    }
+
+    protected static String conclude(boolean success) {
+        return success ? SUCCESS_MESSAGE : FAIL_MESSAGE;
     }
 
     abstract void receive(DatagramPacket packet);

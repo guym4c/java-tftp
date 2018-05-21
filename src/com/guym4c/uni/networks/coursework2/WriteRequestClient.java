@@ -22,12 +22,14 @@ public class WriteRequestClient extends SendThread {
                 socket.receive(packet);
                 receive(packet);
             } catch (SocketTimeoutException timeout) {
-                resend();
+                if (!attemptReSend()) {
+                    destroyable = true;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        System.out.println("Sent: " + this.getName());
+        conclude(success);
     }
 
     @Override
@@ -40,6 +42,7 @@ public class WriteRequestClient extends SendThread {
 
         if (acknowledgementBuffer.getBlock() != getPreviousBlockNumber() || terminated) {
             destroyable = true;
+            success = true;
         } else {
             if (acknowledgementBuffer.getBlock() == 0) {
                 sendPort = packet.getPort();

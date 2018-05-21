@@ -110,7 +110,7 @@ public abstract class CommThread extends Thread {
                 return 0;
             case Data:
             case Acknowledgement:
-                TransmissionPacketBuffer transmissionBuffer = (TransmissionPacketBuffer) sent;
+                TransmissionPacketBuffer transmissionBuffer = (TransmissionPacketBuffer) buffer;
                 return transmissionBuffer.getBlock();
             default:
                 return -1;

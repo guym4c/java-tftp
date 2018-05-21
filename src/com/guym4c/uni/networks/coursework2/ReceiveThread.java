@@ -12,4 +12,19 @@ public abstract class ReceiveThread extends CommThread {
         super(address, port, tid);
     }
 
+    protected boolean isChronologicalBlock(int block) {
+        int previousBlock = 0;
+        if (received instanceof DataPacketBuffer) {
+            DataPacketBuffer previousData = (DataPacketBuffer) received;
+            previousBlock = previousData.getBlock();
+        }
+        if (previousBlock == BLOCK_MAX_VALUE && block == 0) {
+            return true;
+        } else if (previousBlock + 1 == block) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

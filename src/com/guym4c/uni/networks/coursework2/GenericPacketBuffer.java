@@ -71,7 +71,7 @@ public class GenericPacketBuffer {
         do {
             i--;
         } while (bytes[i] == 0);
-        return Arrays.copyOfRange(bytes, 0, i);
+        return Arrays.copyOfRange(bytes, 0, i + 1);
     }
 
     @Override

@@ -29,7 +29,7 @@ public class WriteRequestClient extends SendThread {
                 e.printStackTrace();
             }
         }
-        conclude(success);
+        System.out.println(conclude(success));
     }
 
     @Override

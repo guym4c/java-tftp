@@ -56,8 +56,7 @@ public class WriteRequestServlet extends ReceiveThread {
                 e.printStackTrace();
             }
         }
-
-        conclude(success);
+        System.out.println(conclude(success));
     }
 
     @Override

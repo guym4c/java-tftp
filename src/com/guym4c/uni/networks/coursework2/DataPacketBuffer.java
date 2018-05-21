@@ -53,7 +53,7 @@ public class DataPacketBuffer extends TransmissionPacketBuffer {
         super(bytes);
         this.data = getPayloadBytes(Arrays.copyOfRange(bytes, PAYLOAD_DATA_OFFSET, bytes.length));
 
-        this.terminating = bytes.length - 1 < MAX_PAYLOAD_SIZE + 4;
+        this.terminating = data.length < MAX_PAYLOAD_SIZE;
     }
 
     @Override

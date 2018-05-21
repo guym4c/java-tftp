@@ -8,7 +8,8 @@ import java.util.Arrays;
 public class WriteRequestClient extends SendThread {
 
     public WriteRequestClient(String address, int port, String filename, int tid) {
-        super(address, port, tid, filename);
+        super(address, port, tid);
+        initialiseFile(filename);
 
         RequestPacketBuffer requestBuffer = new RequestPacketBuffer(Opcode.WriteRequest, filename, DEFAULT_MODE);
         send(requestBuffer);

@@ -52,7 +52,7 @@ public class GenericPacketBuffer {
             }
         }
         if (i == bytes.length) {
-            results.add(getStringFromBytes(Arrays.copyOfRange(bytes, base, bytes.length - 1)));
+            results.add(getStringFromBytes(Arrays.copyOfRange(bytes, base, bytes.length)));
         }
         return results;
     }

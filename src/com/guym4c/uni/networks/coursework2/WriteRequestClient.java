@@ -53,7 +53,7 @@ public class WriteRequestClient extends SendThread {
     private byte[] getNextFileHunk() {
         byte[] hunk;
         if (file.length - filePointer < MAX_PAYLOAD_SIZE) {
-            hunk = Arrays.copyOfRange(file, filePointer, file.length - 1);
+            hunk = Arrays.copyOfRange(file, filePointer, file.length);
             terminated = true;
         } else {
             hunk = Arrays.copyOfRange(file, filePointer, filePointer + MAX_PAYLOAD_SIZE);

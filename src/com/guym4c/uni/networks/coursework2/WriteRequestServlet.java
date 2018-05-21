@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.SocketTimeoutException;
+import java.util.Arrays;
 
 public class WriteRequestServlet extends ReceiveThread {
 
@@ -67,12 +68,7 @@ public class WriteRequestServlet extends ReceiveThread {
         System.out.println("Received by " + this.getName());
         System.out.println(dataBuffer);
 
-        int previousBlock = 0;
-        if (dataBuffer.getBlock() > 1) {
-            DataPacketBuffer previousData = (DataPacketBuffer) received;
-            previousBlock = previousData.getBlock();
-        }
-        if (dataBuffer.getBlock() == previousBlock + 1) {
+        if (isChronologicalBlock(dataBuffer.getBlock())) {
             try {
                 fileWriter.write(dataBuffer.getData());
             } catch (IOException e) {

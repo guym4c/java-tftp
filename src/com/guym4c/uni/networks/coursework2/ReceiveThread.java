@@ -20,11 +20,7 @@ public abstract class ReceiveThread extends CommThread {
         }
         if (previousBlock == BLOCK_MAX_VALUE && block == 0) {
             return true;
-        } else if (previousBlock + 1 == block) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return previousBlock + 1 == block;
     }
 
 }

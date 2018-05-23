@@ -40,19 +40,12 @@ public class GenericPacketBuffer {
         ArrayList<String> results = new ArrayList<>();
         int i = 0;
         int base = 0;
-        boolean quit = false;
-        while (i < bytes.length && !quit) {
-            while (bytes[i] != 0) {
+        while (i < bytes.length) {
+            while (i < bytes.length && bytes[i] != 0) {
                 i++;
             }
             results.add(getStringFromBytes(Arrays.copyOfRange(bytes, base, i)));
             base = ++i;
-            if (bytes[i] == 0 && bytes[i + 1] == 0) {
-                quit = true;
-            }
-        }
-        if (i == bytes.length) {
-            results.add(getStringFromBytes(Arrays.copyOfRange(bytes, base, bytes.length)));
         }
         return results;
     }
@@ -64,14 +57,6 @@ public class GenericPacketBuffer {
 
     protected static int getIntFromByte(byte b) {
         return new BigInteger(new byte[] {b}).intValue();
-    }
-
-    protected static byte[] getPayloadBytes(byte[] bytes) {
-        int i = bytes.length;
-        do {
-            i--;
-        } while (bytes[i] == 0);
-        return Arrays.copyOfRange(bytes, 0, i + 1);
     }
 
     @Override

@@ -1,22 +1,14 @@
 package com.guym4c.uni.networks.coursework2;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.SocketException;
-
 public class ReadRequestClient extends ReceiveThread {
 
-    public ReadRequestClient(String address, int port, String filename, int tid) throws SocketException {
+    public ReadRequestClient(String address, int port, String filename, int tid) {
         super(address, port, tid);
+
+        initialiseFile(filename);
+
+        RequestPacketBuffer requestBuffer = new RequestPacketBuffer(Opcode.ReadRequest, filename, DEFAULT_MODE);
+        send(requestBuffer);
     }
 
-    @Override
-    public void run() {
-
-    }
-
-    @Override
-    void receive(DatagramPacket packet) {
-
-    }
 }

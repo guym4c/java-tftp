@@ -123,7 +123,7 @@ public abstract class CommThread extends Thread {
     }
 
     protected byte[] getBytesFromPacket(DatagramPacket packet) {
-        return Arrays.copyOfRange(packet.getData(), 0, packet.getLength());
+        return Arrays.copyOfRange(packet.getData(), 0, packet.getLength() + 1);
     }
 
     abstract void receive(DatagramPacket packet);

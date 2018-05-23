@@ -64,16 +64,14 @@ public abstract class SendThread extends CommThread {
             destroyable = true;
             success = true;
         } else {
-            if (acknowledgementBuffer.getBlock() == 0) {
-                sendPort = packet.getPort();
-            }
+            sendPort = packet.getPort();
             DataPacketBuffer dataBuffer = new DataPacketBuffer(getNextBlock(), getNextFileHunk());
             send(dataBuffer);
             received = acknowledgementBuffer;
         }
     }
 
-    private byte[] getNextFileHunk() {
+    protected byte[] getNextFileHunk() {
         byte[] hunk;
         if (file.length - filePointer < MAX_PAYLOAD_SIZE) {
             hunk = Arrays.copyOfRange(file, filePointer, file.length);

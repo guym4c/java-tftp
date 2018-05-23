@@ -1,27 +1,23 @@
 package com.guym4c.uni.networks.coursework2;
 
-import java.io.IOException;
 import java.net.DatagramPacket;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
 
 public class ReadRequestServlet extends SendThread {
 
-
-    public ReadRequestServlet(DatagramPacket packet, int tid, String filename) {
+    public ReadRequestServlet(DatagramPacket packet, int tid) {
         super(packet, tid);
 
-        RequestPacketBuffer requestBuffer = new RequestPacketBuffer(packet.getData());
+        RequestPacketBuffer requestBuffer = new RequestPacketBuffer(getBytesFromPacket(packet));
 
         System.out.println("Received by " + this.getName());
         System.out.println(requestBuffer);
 
-        if (initialiseFile(filename)) {
-            TransmissionPacketBuffer acknowledgementBuffer = new TransmissionPacketBuffer(0);
-            send(acknowledgementBuffer);
-        } else {
+        if (!initialiseFile(requestBuffer.getFilename())) {
             destroyable = true;
             success = false;
         }
+
+        DataPacketBuffer dataBuffer = new DataPacketBuffer(1, getNextFileHunk());
+        send(dataBuffer);
     }
 }

@@ -33,6 +33,10 @@ public enum Opcode {
         throw new IllegalArgumentException("No opcode with that index");
     }
 
+    /**
+     * @param b An integer stored as a byte.
+     * @return The opcode corresponding to integer $b.
+     */
     public static Opcode fromByte(byte b) {
         return fromInt(new BigInteger(new byte[] {b}).intValue());
     }

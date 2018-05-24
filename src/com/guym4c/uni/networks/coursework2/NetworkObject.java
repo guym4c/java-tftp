@@ -23,6 +23,9 @@ public abstract class NetworkObject {
         }
     }
 
+    /**
+     * @return A new TID, between TID_FLOOR and TID_CEILING. This method is not duplicate-safe.
+     */
     protected static int generateTid() {
         return new Random().nextInt(TID_CEILING) + TID_FLOOR;
     }

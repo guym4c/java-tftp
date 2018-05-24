@@ -30,6 +30,9 @@ public abstract class SendThread extends CommThread {
         return true;
     }
 
+    /**
+     * @return The next valid block number.
+     */
     protected int getNextBlock() {
         return (getPreviousBlockNumber() + 1) % BLOCK_MAX_VALUE;
     }
@@ -71,6 +74,9 @@ public abstract class SendThread extends CommThread {
         }
     }
 
+    /**
+     * @return Gets the next hunk of the file stored in the file field. If this is the final hunk, it will mark this thread as terminated.
+     */
     protected byte[] getNextFileHunk() {
         byte[] hunk;
         if (file.length - filePointer < MAX_PAYLOAD_SIZE) {

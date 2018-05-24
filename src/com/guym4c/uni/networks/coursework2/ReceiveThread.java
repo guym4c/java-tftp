@@ -30,6 +30,10 @@ public abstract class ReceiveThread extends CommThread {
         return true;
     }
 
+    /**
+     * @param block A block number.
+     * @return Whether $block is chronological to the previously sent packet's block number.
+     */
     protected boolean isChronologicalBlock(int block) {
         int previousBlock = 0;
         if (received instanceof DataPacketBuffer) {

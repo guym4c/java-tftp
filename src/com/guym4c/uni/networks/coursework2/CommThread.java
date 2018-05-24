@@ -29,6 +29,10 @@ public abstract class CommThread extends Thread {
 
     private HashMap<Integer, Integer> retries;
 
+    /**
+     * @param packet The packet that, upon send or receipt, creates/ed this thread
+     * @param tid The TID of this thread
+     */
     public CommThread(DatagramPacket packet, int tid) {
         super(THREAD_NAME_PREFIX + tid);
         sendAddress = packet.getAddress();
@@ -36,6 +40,11 @@ public abstract class CommThread extends Thread {
         initialiseCommThread(tid);
     }
 
+    /**
+     * @param address The remote address to send to.
+     * @param port The remote port.
+     * @param tid The TID of this thread
+     */
     public CommThread(String address, int port, int tid) {
         super(THREAD_NAME_PREFIX + tid);
         try {
@@ -47,6 +56,9 @@ public abstract class CommThread extends Thread {
         initialiseCommThread(tid);
     }
 
+    /**
+     * Initialises fields common to the two constructors.
+     */
     private void initialiseCommThread(int tid) {
         System.out.println("Starting " + this.getClass().getSimpleName() + " on " + tid + "\n");
         try {
@@ -61,15 +73,26 @@ public abstract class CommThread extends Thread {
         retries = new HashMap<>();
     }
 
+    /**
+     * Send an error packet.
+     * @param errorCode The relevant error code.
+     * @param message Any String error message.
+     */
     protected void error(ErrorCode errorCode, String message) {
         ErrorPacketBuffer errorPacketBuffer = new ErrorPacketBuffer(errorCode, message);
         send(errorPacketBuffer);
     }
 
+    /**
+     * Sends an UnknownError.
+     */
     protected void error() {
         error(ErrorCode.UnknownError, "Unknown Error");
     }
 
+    /**
+     * @param buffer The buffer class to be sent.
+     */
     protected void send(GenericPacketBuffer buffer) {
         byte[] bytes = buffer.getByteBuffer().toPrimitive();
         DatagramPacket packet = new DatagramPacket(bytes, bytes.length);
@@ -86,6 +109,10 @@ public abstract class CommThread extends Thread {
         System.out.println(buffer);
     }
 
+    /**
+     * Attempt to re-send the last send packet.
+     * @return True if re-send was successful, false if the packet cannot be re-sent (e.g. if the maximum amount of retries has been reached)
+     */
     protected boolean attemptReSend() {
         int previousBlock = getPreviousBlockNumber();
         retries.putIfAbsent(previousBlock, 0);
@@ -100,10 +127,17 @@ public abstract class CommThread extends Thread {
 
     }
 
+    /**
+     * @return The block number of the previously sent packet (rules from getBlockNumber() apply)
+     */
     protected int getPreviousBlockNumber() {
         return getBlockNumber(sent);
     }
 
+    /**
+     * @param buffer The packet buffer to extract the block number from.
+     * @return $buffer's block number. If a request, this will be 0. If an error, this will be -1.
+     */
     protected static int getBlockNumber(GenericPacketBuffer buffer) {
         switch (buffer.getOpcode()) {
             case ReadRequest:
@@ -118,10 +152,18 @@ public abstract class CommThread extends Thread {
         }
     }
 
+    /**
+     * @param success True if the operation completed successfully, false otherwise
+     * @return The concluding message as stored in SUCCESS_MESSAGE or FAIL_MESSAGE.
+     */
     protected static String conclude(boolean success) {
         return success ? SUCCESS_MESSAGE : FAIL_MESSAGE;
     }
 
+    /**
+     * @param packet A DataGram packet object
+     * @return The raw byte data of the packet, excluding trailing nulls
+     */
     protected byte[] getBytesFromPacket(DatagramPacket packet) {
         return Arrays.copyOfRange(packet.getData(), 0, packet.getLength() + 1);
     }

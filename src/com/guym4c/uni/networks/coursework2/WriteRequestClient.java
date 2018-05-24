@@ -6,7 +6,7 @@ public class WriteRequestClient extends SendThread {
         super(address, port, tid);
         initialiseFile(filename);
 
-        RequestPacketBuffer requestBuffer = new RequestPacketBuffer(Opcode.WriteRequest, filename, DEFAULT_MODE);
+        RequestPacketBuffer requestBuffer = new RequestPacketBuffer(Opcode.WriteRequest, filename);
         send(requestBuffer);
     }
 

@@ -17,6 +17,9 @@ public class ByteArray extends ArrayList<Byte> {
         }
     }
 
+    /**
+     * Adds a zero byte to the list.
+     */
     public void addZeroes() {
         this.add((byte) 0);
     }
@@ -27,6 +30,9 @@ public class ByteArray extends ArrayList<Byte> {
         }
     }
 
+    /**
+     * @return This ArrayList as byte[]
+     */
     public byte[] toPrimitive() {
         byte[] bytes = new byte[this.size()];
         int i = 0;

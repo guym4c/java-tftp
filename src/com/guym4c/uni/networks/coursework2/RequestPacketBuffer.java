@@ -16,6 +16,12 @@ public class RequestPacketBuffer extends GenericPacketBuffer {
         this.mode = mode;
     }
 
+    public RequestPacketBuffer(Opcode opcode, String filename) {
+        super(opcode);
+        this.filename = filename;
+        this.mode = Mode.Octet;
+    }
+
     public String getFilename() {
         return filename;
     }
